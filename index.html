@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dhwanu.exe</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: #ffb6d9;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      color: white;
+      overflow: hidden;
+    }
+
+    .container {
+      margin-top: 100px;
+    }
+
+    h1 {
+      font-size: 40px;
+      animation: shake 0.6s infinite alternate;
+    }
+
+    p {
+      font-size: 20px;
+      margin: 20px;
+    }
+
+    button {
+      background-color: #ff4da6;
+      border: none;
+      padding: 15px 25px;
+      font-size: 18px;
+      margin: 10px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background-color: #ff1a8c;
+      transform: scale(1.1);
+    }
+
+    @keyframes shake {
+      from { transform: rotate(-2deg); }
+      to { transform: rotate(2deg); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>⚠ SYSTEM ERROR ⚠</h1>
+    <p>Too much talking detected.</p>
+    <p>Processing speed cannot handle Dhwanu energy.</p>
+
+    <button onclick="enterSite()">Let me in 😤</button>
+    <button onclick="lieDetected()">I will talk less I promise 🤥</button>
+  </div>
+
+  <script>
+    function enterSite() {
+      alert("Warning: Chaos mode activated.");
+    }
+
+    function lieDetected() {
+      alert("Lie detected. You speak 17 thoughts at once.");
+    }
+  </script>
+
+</body>
+</html>
