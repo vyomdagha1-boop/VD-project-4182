@@ -373,17 +373,41 @@ setTimeout(()=>screen.style.animation="",400);
 }
 
 function confettiBomb(){
-for(let i=0;i<200;i++){
-let conf=document.createElement("div");
-conf.style.position="absolute";
-conf.style.width="8px";
-conf.style.height="8px";
-conf.style.backgroundColor="hsl("+Math.random()*360+",100%,50%)";
-conf.style.left=Math.random()*100+"%";
-conf.style.top="-10px";
-conf.style.animation="fall 3s linear forwards";
-document.getElementById("quizScreen").appendChild(conf);
-}
+
+  const container = document.getElementById("quizScreen");
+
+  for(let i=0;i<120;i++){
+
+    const conf = document.createElement("div");
+
+    const size = Math.random()*8+6;
+    const angle = Math.random()*2*Math.PI;
+    const velocity = Math.random()*8+4;
+
+    conf.style.position = "absolute";
+    conf.style.width = size+"px";
+    conf.style.height = size+"px";
+    conf.style.backgroundColor = "hsl("+Math.random()*360+",100%,60%)";
+    conf.style.borderRadius = Math.random()>0.5 ? "50%" : "3px";
+    conf.style.left = "50%";
+    conf.style.top = "40%";
+    conf.style.pointerEvents = "none";
+
+    container.appendChild(conf);
+
+    const x = Math.cos(angle)*velocity*20;
+    const y = Math.sin(angle)*velocity*20;
+
+    conf.animate([
+      { transform: "translate(0,0) rotate(0deg)", opacity:1 },
+      { transform: `translate(${x}px, ${y+200}px) rotate(720deg)`, opacity:0 }
+    ],{
+      duration: 1500,
+      easing: "ease-out"
+    });
+
+    setTimeout(()=>conf.remove(),1500);
+  }
 }
 
 const quizQuestions=[
