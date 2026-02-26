@@ -2,16 +2,21 @@
 <html>
 <head>
   <title>Dhwanu.exe</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&family=Orbitron:wght@600&display=swap" rel="stylesheet">
+
   <style>
     body {
       margin: 0;
-      font-family: 'Comic Sans MS', cursive, sans-serif;
+      font-family: 'Poppins', sans-serif;
+      overflow: hidden;
       text-align: center;
       color: white;
-      overflow: hidden;
       background: linear-gradient(-45deg, #ff9ad5, #ffb6d9, #ffc3e6, #ff8cc6);
       background-size: 400% 400%;
-      animation: gradientBG 10s ease infinite;
+      animation: gradientBG 12s ease infinite;
     }
 
     @keyframes gradientBG {
@@ -22,47 +27,49 @@
 
     .screen {
       display: none;
-      margin-top: 100px;
+      padding: 40px;
+      margin-top: 80px;
       position: relative;
-      z-index: 2;
-      padding: 20px;
+      z-index: 5;
     }
 
-    .active {
-      display: block;
-    }
+    .active { display: block; }
 
     h1 {
-      font-size: 38px;
+      font-weight: 800;
+      font-size: 40px;
     }
 
     p {
       font-size: 20px;
-      margin: 20px;
     }
 
     button {
-      background-color: #ff4da6;
-      border: none;
-      padding: 15px 25px;
-      font-size: 18px;
+      padding: 15px 30px;
       margin: 10px;
-      border-radius: 20px;
+      font-size: 18px;
+      border-radius: 30px;
+      border: none;
       cursor: pointer;
+      background: linear-gradient(45deg, #ff4da6, #ff1a8c);
+      color: white;
+      font-weight: 600;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
       transition: 0.3s;
-      box-shadow: 0 8px 15px rgba(0,0,0,0.2);
     }
 
     button:hover {
-      background-color: #ff1a8c;
       transform: scale(1.1);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.4);
     }
 
+    /* Floating Emojis */
     .emoji {
       position: absolute;
       font-size: 30px;
       animation: floatUp linear infinite;
       opacity: 0.7;
+      z-index: 1;
     }
 
     @keyframes floatUp {
@@ -70,19 +77,100 @@
       to { transform: translateY(-10vh); }
     }
 
+    /* Stars */
+    .star {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: white;
+      border-radius: 50%;
+      animation: twinkle 2s infinite alternate;
+    }
+
+    @keyframes twinkle {
+      from { opacity: 0.3; }
+      to { opacity: 1; }
+    }
+
+    /* Hacker Screen */
+    .hacker {
+      background: black;
+      color: #00ff88;
+      font-family: 'Orbitron', sans-serif;
+      height: 100vh;
+      padding-top: 100px;
+    }
+
+    .typing {
+      border-right: 2px solid #00ff88;
+      white-space: nowrap;
+      overflow: hidden;
+      width: 0;
+      animation: typing 3s steps(30) forwards;
+    }
+
+    @keyframes typing {
+      to { width: 100%; }
+    }
+
+    .loading-bar {
+      width: 300px;
+      height: 20px;
+      border: 2px solid #00ff88;
+      margin: 30px auto;
+    }
+
+    .loading-fill {
+      height: 100%;
+      width: 0%;
+      background: #00ff88;
+      animation: load 3s forwards;
+    }
+
+    @keyframes load {
+      to { width: 100%; }
+    }
+
+    /* Glass Card */
     .card {
       background: rgba(255,255,255,0.2);
-      backdrop-filter: blur(10px);
-      padding: 30px;
-      border-radius: 20px;
+      backdrop-filter: blur(15px);
+      padding: 40px;
+      border-radius: 25px;
       display: inline-block;
+      animation: fadeIn 1.5s ease forwards;
     }
 
     .card img {
-      width: 250px;
+      width: 260px;
       border-radius: 20px;
-      margin-top: 15px;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+      margin-top: 20px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+      animation: floatImage 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes floatImage {
+      from { transform: translateY(0px); }
+      to { transform: translateY(-10px); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.8); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    /* Popup */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #ff1a8c;
+      padding: 15px 30px;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+      display: none;
+      font-weight: bold;
     }
 
   </style>
@@ -96,81 +184,106 @@
   <div class="emoji" style="left:70%; animation-duration:18s;">✨</div>
   <div class="emoji" style="left:85%; animation-duration:14s;">🎀</div>
 
-  <!-- INTRO SCREEN -->
+  <!-- Random Stars -->
+  <script>
+    for(let i=0;i<40;i++){
+      let star=document.createElement("div");
+      star.className="star";
+      star.style.left=Math.random()*100+"%";
+      star.style.top=Math.random()*100+"%";
+      document.body.appendChild(star);
+    }
+  </script>
+
+  <!-- INTRO -->
   <div id="screen0" class="screen active">
     <h1>Hi Dhwani 💗</h1>
     <p>I built this entire website for you.</p>
-    <p>From scratch. With zero sleep. And full chaos.</p>
-    <p>Proceed at your own risk 😌</p>
-    <button onclick="goToSystem()">Enter the chaos</button>
+    <p>From scratch. With chaos. And love.</p>
+    <button onclick="goToSystem()">Enter the Chaos</button>
   </div>
 
-  <!-- SYSTEM ERROR -->
-  <div id="screen1" class="screen">
-    <h1>⚠ SYSTEM ERROR ⚠</h1>
-    <p>Too much talking detected.</p>
-    <p>Processing speed cannot handle Dhwanu energy.</p>
-
-    <button onclick="goToScreen2()">Let me in 😤</button>
-    <button onclick="lieDetected()">I will talk less I promise 🤥</button>
+  <!-- HACKER -->
+  <div id="screen1" class="screen hacker">
+    <h1 class="typing">⚠ SYSTEM BREACH DETECTED ⚠</h1>
+    <p>Scanning Subject: DHWANU...</p>
+    <p>Talking Speed: Infinite</p>
+    <p>Energy Level: Too Powerful</p>
+    <div class="loading-bar">
+      <div class="loading-fill"></div>
+    </div>
+    <button onclick="goToScreen2()">Override System</button>
   </div>
 
-  <!-- COLD COFFEE TEST -->
+  <!-- COFFEE TEST -->
   <div id="screen2" class="screen">
     <h1>☕ Cold Coffee Security Check</h1>
     <p>Select Dhwanu's correct fuel source:</p>
-
-    <button onclick="teaWrong()">Tea</button>
-    <button onclick="waterWrong()">Water</button>
+    <button onclick="showPopup('Aunty hai kya?')">Tea</button>
+    <button onclick="showPopup('Too basic for my fancy girl')">Water</button>
     <button onclick="correctFuel()">Cold Coffee (No Sugar)</button>
-    <button onclick="proteinWrong()">Protein Shake</button>
+    <button onclick="showPopup('Pls dont try to be Vyom')">Protein Shake</button>
   </div>
 
-  <!-- FINAL SCREEN -->
+  <!-- FINAL -->
   <div id="screen3" class="screen">
     <div class="card">
-      <h1>ACCESS GRANTED 💗</h1>
-      <p>You are chaos.</p>
-      <p>You are comfort.</p>
+      <h1>Happy Birthday Dhwanu 💗</h1>
+      <p>You are chaos. You are comfort.</p>
       <p>You are baby. You are boss.</p>
-      <p>And I would choose you in every universe.</p>
-      <p>Happy Birthday Dhwanu 😌</p>
-
-      <img src="image.jpg" alt="Us together">
+      <p>I would choose you in every universe.</p>
+      <img src="image.jpg" alt="Us">
     </div>
   </div>
 
+  <div id="popup" class="popup"></div>
+
   <script>
-    function goToSystem() {
+    function goToSystem(){
       document.getElementById("screen0").classList.remove("active");
       document.getElementById("screen1").classList.add("active");
     }
 
-    function goToScreen2() {
+    function goToScreen2(){
       document.getElementById("screen1").classList.remove("active");
       document.getElementById("screen2").classList.add("active");
     }
 
-    function lieDetected() {
-      alert("Lie detected. You speak 17 thoughts at once.");
-    }
-
-    function teaWrong() {
-      alert("Aunty hai kya?");
-    }
-
-    function waterWrong() {
-      alert("Too basic for my fancy girl.");
-    }
-
-    function proteinWrong() {
-      alert("Pls dont try to be Vyom.");
-    }
-
-    function correctFuel() {
+    function correctFuel(){
       document.getElementById("screen2").classList.remove("active");
       document.getElementById("screen3").classList.add("active");
+      launchConfetti();
     }
+
+    function showPopup(text){
+      let popup=document.getElementById("popup");
+      popup.innerText=text;
+      popup.style.display="block";
+      setTimeout(()=>popup.style.display="none",2000);
+    }
+
+    function launchConfetti(){
+      for(let i=0;i<100;i++){
+        let conf=document.createElement("div");
+        conf.style.position="absolute";
+        conf.style.width="6px";
+        conf.style.height="6px";
+        conf.style.backgroundColor="hsl("+Math.random()*360+",100%,50%)";
+        conf.style.left=Math.random()*100+"%";
+        conf.style.top="-10px";
+        conf.style.opacity="0.8";
+        conf.style.animation="fall 3s linear forwards";
+        document.body.appendChild(conf);
+      }
+    }
+
+    const style=document.createElement('style');
+    style.innerHTML=`
+      @keyframes fall {
+        to { transform: translateY(110vh); opacity:0; }
+      }
+    `;
+    document.head.appendChild(style);
   </script>
 
 </body>
