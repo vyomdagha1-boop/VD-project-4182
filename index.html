@@ -4,8 +4,7 @@
   <title>Dhwanu.exe</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&family=Orbitron:wght@600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&family=Orbitron:wght@700&display=swap" rel="stylesheet">
 
   <style>
     body {
@@ -14,7 +13,7 @@
       overflow: hidden;
       text-align: center;
       color: white;
-      background: linear-gradient(-45deg, #ff9ad5, #ffb6d9, #ffc3e6, #ff8cc6);
+      background: linear-gradient(-45deg, #ff8fd8, #ffb3e6, #ffd6f3, #ff99cc);
       background-size: 400% 400%;
       animation: gradientBG 12s ease infinite;
     }
@@ -28,7 +27,7 @@
     .screen {
       display: none;
       padding: 40px;
-      margin-top: 80px;
+      margin-top: 60px;
       position: relative;
       z-index: 5;
     }
@@ -46,12 +45,12 @@
 
     button {
       padding: 15px 30px;
-      margin: 10px;
+      margin: 12px;
       font-size: 18px;
-      border-radius: 30px;
+      border-radius: 40px;
       border: none;
       cursor: pointer;
-      background: linear-gradient(45deg, #ff4da6, #ff1a8c);
+      background: linear-gradient(45deg, #ff1493, #ff69b4);
       color: white;
       font-weight: 600;
       box-shadow: 0 10px 25px rgba(0,0,0,0.3);
@@ -59,7 +58,7 @@
     }
 
     button:hover {
-      transform: scale(1.1);
+      transform: scale(1.15) rotate(-2deg);
       box-shadow: 0 15px 35px rgba(0,0,0,0.4);
     }
 
@@ -77,53 +76,36 @@
       to { transform: translateY(-10vh); }
     }
 
-    /* Stars */
-    .star {
-      position: absolute;
-      width: 4px;
-      height: 4px;
-      background: white;
-      border-radius: 50%;
-      animation: twinkle 2s infinite alternate;
-    }
-
-    @keyframes twinkle {
-      from { opacity: 0.3; }
-      to { opacity: 1; }
-    }
-
     /* Hacker Screen */
     .hacker {
       background: black;
-      color: #00ff88;
+      color: #00ff99;
       font-family: 'Orbitron', sans-serif;
       height: 100vh;
       padding-top: 100px;
     }
 
-    .typing {
-      border-right: 2px solid #00ff88;
-      white-space: nowrap;
-      overflow: hidden;
-      width: 0;
-      animation: typing 3s steps(30) forwards;
+    .glitch {
+      animation: glitch 0.4s infinite;
     }
 
-    @keyframes typing {
-      to { width: 100%; }
+    @keyframes glitch {
+      0% { text-shadow: 2px 2px red; }
+      50% { text-shadow: -2px -2px blue; }
+      100% { text-shadow: 2px -2px lime; }
     }
 
     .loading-bar {
       width: 300px;
       height: 20px;
-      border: 2px solid #00ff88;
+      border: 2px solid #00ff99;
       margin: 30px auto;
     }
 
     .loading-fill {
       height: 100%;
       width: 0%;
-      background: #00ff88;
+      background: #00ff99;
       animation: load 3s forwards;
     }
 
@@ -131,12 +113,52 @@
       to { width: 100%; }
     }
 
-    /* Glass Card */
+    /* Cold Coffee Challenge */
+    .coffee-card {
+      background: linear-gradient(135deg, #ff5fd2, #ff9df0);
+      padding: 40px;
+      border-radius: 30px;
+      display: inline-block;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+      animation: bounceIn 1s ease;
+    }
+
+    @keyframes bounceIn {
+      0% { transform: scale(0.5); opacity: 0; }
+      60% { transform: scale(1.1); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .spin {
+      animation: spin 3s linear infinite;
+      font-size: 50px;
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* Popup */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #ff0080;
+      padding: 15px 30px;
+      border-radius: 30px;
+      display: none;
+      font-weight: bold;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+    }
+
+    /* Final Card */
     .card {
       background: rgba(255,255,255,0.2);
       backdrop-filter: blur(15px);
       padding: 40px;
-      border-radius: 25px;
+      border-radius: 30px;
       display: inline-block;
       animation: fadeIn 1.5s ease forwards;
     }
@@ -151,26 +173,12 @@
 
     @keyframes floatImage {
       from { transform: translateY(0px); }
-      to { transform: translateY(-10px); }
+      to { transform: translateY(-15px); }
     }
 
     @keyframes fadeIn {
       from { opacity: 0; transform: scale(0.8); }
       to { opacity: 1; transform: scale(1); }
-    }
-
-    /* Popup */
-    .popup {
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: #ff1a8c;
-      padding: 15px 30px;
-      border-radius: 20px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
-      display: none;
-      font-weight: bold;
     }
 
   </style>
@@ -184,51 +192,42 @@
   <div class="emoji" style="left:70%; animation-duration:18s;">✨</div>
   <div class="emoji" style="left:85%; animation-duration:14s;">🎀</div>
 
-  <!-- Random Stars -->
-  <script>
-    for(let i=0;i<40;i++){
-      let star=document.createElement("div");
-      star.className="star";
-      star.style.left=Math.random()*100+"%";
-      star.style.top=Math.random()*100+"%";
-      document.body.appendChild(star);
-    }
-  </script>
-
   <!-- INTRO -->
   <div id="screen0" class="screen active">
-    <h1>Hi Dhwani 💗</h1>
-    <p>I built this entire website for you.</p>
-    <p>From scratch. With chaos. And love.</p>
-    <button onclick="goToSystem()">Enter the Chaos</button>
+    <h1>Hi Dhwani 💖</h1>
+    <p>I built this entire chaotic universe for you.</p>
+    <button onclick="goToSystem()">Enter The Chaos 🚀</button>
   </div>
 
-  <!-- HACKER -->
+  <!-- SYSTEM CRASH -->
   <div id="screen1" class="screen hacker">
-    <h1 class="typing">⚠ SYSTEM BREACH DETECTED ⚠</h1>
-    <p>Scanning Subject: DHWANU...</p>
-    <p>Talking Speed: Infinite</p>
-    <p>Energy Level: Too Powerful</p>
+    <h1 class="glitch">⚠ WEBSITE CRASHED ⚠</h1>
+    <p>Reason: Excessive Talking Speed Detected.</p>
+    <p>System Overloaded by Dhwanu Energy.</p>
     <div class="loading-bar">
       <div class="loading-fill"></div>
     </div>
-    <button onclick="goToScreen2()">Override System</button>
+    <button onclick="goToScreen2()">Override System 💻</button>
   </div>
 
-  <!-- COFFEE TEST -->
+  <!-- COLD COFFEE CHAOS -->
   <div id="screen2" class="screen">
-    <h1>☕ Cold Coffee Security Check</h1>
-    <p>Select Dhwanu's correct fuel source:</p>
-    <button onclick="showPopup('Aunty hai kya?')">Tea</button>
-    <button onclick="showPopup('Too basic for my fancy girl')">Water</button>
-    <button onclick="correctFuel()">Cold Coffee (No Sugar)</button>
-    <button onclick="showPopup('Pls dont try to be Vyom')">Protein Shake</button>
+    <div class="coffee-card">
+      <div class="spin">☕✨</div>
+      <h1>Cold Coffee Queen Challenge 👑</h1>
+      <p>Only the real Dhwanu can unlock this...</p>
+
+      <button onclick="showPopup('Aunty hai kya? 😂')">🍵 Tea</button>
+      <button onclick="showPopup('Too basic for my fancy girl 💅')">💧 Water</button>
+      <button onclick="correctFuel()">☕ Cold Coffee (No Sugar)</button>
+      <button onclick="showPopup('Pls dont try to be Vyom 🏋️')">💪 Protein Shake</button>
+    </div>
   </div>
 
   <!-- FINAL -->
   <div id="screen3" class="screen">
     <div class="card">
-      <h1>Happy Birthday Dhwanu 💗</h1>
+      <h1>Happy Birthday Dhwanu 🎉💖</h1>
       <p>You are chaos. You are comfort.</p>
       <p>You are baby. You are boss.</p>
       <p>I would choose you in every universe.</p>
@@ -263,7 +262,7 @@
     }
 
     function launchConfetti(){
-      for(let i=0;i<100;i++){
+      for(let i=0;i<120;i++){
         let conf=document.createElement("div");
         conf.style.position="absolute";
         conf.style.width="6px";
@@ -278,11 +277,7 @@
     }
 
     const style=document.createElement('style');
-    style.innerHTML=`
-      @keyframes fall {
-        to { transform: translateY(110vh); opacity:0; }
-      }
-    `;
+    style.innerHTML=`@keyframes fall { to { transform: translateY(110vh); opacity:0; } }`;
     document.head.appendChild(style);
   </script>
 
