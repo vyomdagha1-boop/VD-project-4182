@@ -348,14 +348,55 @@ document.getElementById("screen4").classList.remove("active");
 document.getElementById("screen5").classList.add("active");
 }
 
-/* QUIZ */
-let quizIndex=0;let quizScore=0;
+<script>
 
+/* QUIZ UPGRADED */
+
+let quizIndex=0;
+let quizScore=0;
+
+/* Screen Shake */
+function shakeScreen(){
+  const screen=document.getElementById("quizScreen");
+  screen.style.animation="shake 0.4s";
+  setTimeout(()=>screen.style.animation="",400);
+}
+
+/* Add shake keyframes dynamically */
+const shakeStyle=document.createElement("style");
+shakeStyle.innerHTML=`
+@keyframes shake {
+  0%{transform:translate(2px,2px);}
+  25%{transform:translate(-2px,2px);}
+  50%{transform:translate(2px,-2px);}
+  75%{transform:translate(-2px,-2px);}
+  100%{transform:translate(0,0);}
+}`;
+document.head.appendChild(shakeStyle);
+
+/* Confetti Bomb */
+function confettiBomb(){
+  for(let i=0;i<200;i++){
+    let conf=document.createElement("div");
+    conf.style.position="absolute";
+    conf.style.width="8px";
+    conf.style.height="8px";
+    conf.style.backgroundColor="hsl("+Math.random()*360+",100%,50%)";
+    conf.style.left=Math.random()*100+"%";
+    conf.style.top="-10px";
+    conf.style.opacity="0.9";
+    conf.style.animation="fallConfetti 3s linear forwards";
+    document.getElementById("quizScreen").appendChild(conf);
+  }
+}
+
+/* Quiz Start */
 function startQuiz(){
-document.getElementById("screen5").classList.remove("active");
-document.getElementById("quizScreen").style.display="block";
-quizIndex=0;quizScore=0;
-loadQuestion();
+  document.getElementById("screen5").classList.remove("active");
+  document.getElementById("quizScreen").style.display="block";
+  quizIndex=0;
+  quizScore=0;
+  loadQuestion();
 }
 
 const quizQuestions=[
@@ -393,32 +434,85 @@ options:[
 ];
 
 function loadQuestion(){
-const card=document.getElementById("quizCard");
-if(quizIndex>=quizQuestions.length){
-card.innerHTML="<h2>Final Score: "+quizScore+"/5 💖</h2><button onclick='alert(\"Next: Reasons Generator 💖\")'>Continue 😌</button>";
-return;
-}
-let q=quizQuestions[quizIndex];
-let html="<h2>"+q.q+"</h2>";
-q.options.forEach(opt=>{
-html+="<div class='quiz-option' onclick='selectOption("+opt.correct+",`"+opt.popup+"`)'>"+opt.text+"</div>";
-});
-card.innerHTML=html;
-document.getElementById("quizScore").innerText="Score: "+quizScore+"/5";
+  const card=document.getElementById("quizCard");
+
+  if(quizIndex>=quizQuestions.length){
+
+    let resultMessage="";
+
+    if(quizScore<=2){
+      resultMessage="We need to talk. 😭";
+    }
+    else if(quizScore<=4){
+      resultMessage="Almost Certified.";
+    }
+    else{
+      resultMessage="Certified Main Character Energy 💖";
+    }
+
+    card.innerHTML=`
+      <h2>Final Score: ${quizScore}/5</h2>
+      <h3>${resultMessage}</h3>
+      <button onclick="endQuiz()">Continue 😌</button>
+    `;
+
+    /* Extra Glow if 5/5 */
+    if(quizScore===5){
+      card.style.boxShadow="0 0 60px #ff00ff, 0 0 100px #ff69b4";
+      card.style.animation="glowPulse 1s infinite alternate";
+    }
+
+    return;
+  }
+
+  let q=quizQuestions[quizIndex];
+  let html="<h2>"+q.q+"</h2>";
+
+  q.options.forEach(opt=>{
+    html+=`<div class="quiz-option" onclick="selectOption(${opt.correct}, \`${opt.popup}\`)">${opt.text}</div>`;
+  });
+
+  card.innerHTML=html;
+  document.getElementById("quizScore").innerText="Score: "+quizScore+"/5";
 }
 
 function selectOption(correct,popup){
-if(correct){quizScore++;}
-showQuizPopup(popup);
-setTimeout(()=>{quizIndex++;loadQuestion();},2000);
+
+  if(correct){
+    quizScore++;
+    confettiBomb();
+  } else {
+    shakeScreen();
+  }
+
+  showQuizPopup(popup);
+
+  setTimeout(()=>{
+    quizIndex++;
+    loadQuestion();
+  },2000);
 }
 
 function showQuizPopup(text){
-const popup=document.getElementById("quizPopup");
-popup.innerText=text;
-popup.classList.add("show");
-setTimeout(()=>popup.classList.remove("show"),2000);
+  const popup=document.getElementById("quizPopup");
+  popup.innerText=text;
+  popup.classList.add("show");
+  setTimeout(()=>popup.classList.remove("show"),2000);
 }
+
+function endQuiz(){
+  document.getElementById("quizScreen").style.display="none";
+  alert("Next: Reasons I Love You Generator 💖");
+}
+
+/* Glow Animation */
+const glowStyle=document.createElement("style");
+glowStyle.innerHTML=`
+@keyframes glowPulse{
+  from{box-shadow:0 0 40px #ff00ff;}
+  to{box-shadow:0 0 100px #ff69b4;}
+}`;
+document.head.appendChild(glowStyle);
 
 </script>
 
