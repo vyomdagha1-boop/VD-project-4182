@@ -5,20 +5,23 @@
   <style>
     body {
       margin: 0;
-      background-color: #ffb6d9;
       font-family: Arial, sans-serif;
       text-align: center;
       color: white;
-      overflow: hidden;
+      background-color: #ffb6d9;
     }
 
-    .container {
+    .screen {
+      display: none;
       margin-top: 100px;
     }
 
+    .active {
+      display: block;
+    }
+
     h1 {
-      font-size: 40px;
-      animation: shake 0.6s infinite alternate;
+      font-size: 38px;
     }
 
     p {
@@ -41,31 +44,55 @@
       background-color: #ff1a8c;
       transform: scale(1.1);
     }
-
-    @keyframes shake {
-      from { transform: rotate(-2deg); }
-      to { transform: rotate(2deg); }
-    }
   </style>
 </head>
 <body>
 
-  <div class="container">
+  <!-- SCREEN 1 -->
+  <div id="screen1" class="screen active">
     <h1>⚠ SYSTEM ERROR ⚠</h1>
     <p>Too much talking detected.</p>
     <p>Processing speed cannot handle Dhwanu energy.</p>
 
-    <button onclick="enterSite()">Let me in 😤</button>
+    <button onclick="goToScreen2()">Let me in 😤</button>
     <button onclick="lieDetected()">I will talk less I promise 🤥</button>
   </div>
 
+  <!-- SCREEN 2 -->
+  <div id="screen2" class="screen">
+    <h1>☕ Cold Coffee Security Check</h1>
+    <p>Select Dhwanu's correct fuel source:</p>
+
+    <button onclick="wrongFuel()">Tea</button>
+    <button onclick="wrongFuel()">Water</button>
+    <button onclick="correctFuel()">Cold Coffee (No Sugar)</button>
+    <button onclick="wrongFuel()">Protein Shake</button>
+  </div>
+
+  <!-- SCREEN 3 -->
+  <div id="screen3" class="screen">
+    <h1>ACCESS GRANTED 💗</h1>
+    <p>Chaos mode fully activated.</p>
+    <p>Happy Birthday Dhwanu 😌</p>
+  </div>
+
   <script>
-    function enterSite() {
-      alert("Warning: Chaos mode activated.");
+    function goToScreen2() {
+      document.getElementById("screen1").classList.remove("active");
+      document.getElementById("screen2").classList.add("active");
     }
 
     function lieDetected() {
       alert("Lie detected. You speak 17 thoughts at once.");
+    }
+
+    function wrongFuel() {
+      alert("Incorrect. Sugar contamination detected.");
+    }
+
+    function correctFuel() {
+      document.getElementById("screen2").classList.remove("active");
+      document.getElementById("screen3").classList.add("active");
     }
   </script>
 
