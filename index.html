@@ -49,7 +49,7 @@
     }
 
     button:hover {
-      transform: scale(1.15) rotate(-2deg);
+      transform: scale(1.1);
     }
 
     /* Floating Emojis */
@@ -66,7 +66,14 @@
       to { transform: translateY(-10vh); }
     }
 
-    /* Hacker Screen */
+    /* INTRO BUTTON */
+    .main-btn {
+      background: linear-gradient(45deg, #ff1493, #ff69b4);
+      color: white;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    }
+
+    /* HACKER SCREEN */
     .hacker {
       background: black;
       color: #00ff99;
@@ -114,20 +121,13 @@
       color: black;
     }
 
-    /* Challenge Card */
+    /* CHALLENGE */
     .coffee-card {
       background: linear-gradient(135deg, #ff5fd2, #ff9df0);
       padding: 40px;
       border-radius: 30px;
       display: inline-block;
       box-shadow: 0 15px 40px rgba(0,0,0,0.3);
-      animation: bounceIn 1s ease;
-    }
-
-    @keyframes bounceIn {
-      0% { transform: scale(0.5); opacity: 0; }
-      60% { transform: scale(1.1); }
-      100% { transform: scale(1); opacity: 1; }
     }
 
     .challenge-btn {
@@ -136,18 +136,21 @@
       box-shadow: 0 10px 25px rgba(0,0,0,0.3);
     }
 
-    /* Custom Popup */
+    /* ERROR POPUP */
     .popup {
       position: fixed;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%) scale(0);
-      background: linear-gradient(135deg, #ff0080, #ff4dc4);
-      padding: 30px 50px;
-      border-radius: 30px;
-      font-size: 22px;
-      font-weight: bold;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+      background: #1a0000;
+      border: 3px solid red;
+      padding: 30px 40px;
+      border-radius: 15px;
+      font-family: 'Courier New', monospace;
+      color: red;
+      width: 300px;
+      text-align: left;
+      box-shadow: 0 0 25px red;
       transition: 0.3s;
       z-index: 10;
     }
@@ -156,7 +159,12 @@
       transform: translate(-50%, -50%) scale(1);
     }
 
-    /* Final Card */
+    .popup h3 {
+      margin-top: 0;
+      color: #ff4d4d;
+    }
+
+    /* FINAL */
     .card {
       background: rgba(255,255,255,0.2);
       backdrop-filter: blur(15px);
@@ -192,11 +200,13 @@
   <div class="emoji" style="left:50%; animation-duration:16s;">✨</div>
   <div class="emoji" style="left:80%; animation-duration:14s;">🎀</div>
 
-  <!-- INTRO -->
+  <!-- INTRO RESTORED -->
   <div id="screen0" class="screen active">
-    <h1>Hi Dhwani 💖</h1>
-    <p>I built this chaotic universe for you.</p>
-    <button onclick="goToSystem()" class="challenge-btn">Enter The Chaos 🚀</button>
+    <h1>Hi Dhwani 💗</h1>
+    <p>I built this entire website for you.</p>
+    <p>From scratch. With zero sleep. And full chaos.</p>
+    <p>Proceed at your own risk 😌</p>
+    <button onclick="goToSystem()" class="main-btn">Enter the Chaos</button>
   </div>
 
   <!-- SYSTEM CRASH -->
@@ -210,16 +220,16 @@
     <button onclick="goToScreen2()" class="override-btn">OVERRIDE SYSTEM</button>
   </div>
 
-  <!-- NEW CHALLENGE -->
+  <!-- CHALLENGE -->
   <div id="screen2" class="screen">
     <div class="coffee-card">
       <h1>Fuel The Main Character Energy ✨</h1>
       <p>Select the correct power source to unlock Dhwanu Mode.</p>
 
-      <button class="challenge-btn" onclick="showPopup('🍵 Aunty hai kya?')">Tea</button>
-      <button class="challenge-btn" onclick="showPopup('💧 Too basic for my fancy girl')">Water</button>
-      <button class="challenge-btn" onclick="correctFuel()">Unlock Power Source</button>
-      <button class="challenge-btn" onclick="showPopup('🏋️ Pls dont try to be Vyom')">Protein Shake</button>
+      <button class="challenge-btn" onclick="showPopup('Aunty Mode Detected')">🍵 Tea</button>
+      <button class="challenge-btn" onclick="showPopup('Basic Energy Not Allowed')">💧 Water</button>
+      <button class="challenge-btn" onclick="correctFuel()">☕ Cold Coffee (Absolutely no sugar)</button>
+      <button class="challenge-btn" onclick="showPopup('Vyom Clone Attempt Blocked')">💪 Protein Shake</button>
     </div>
   </div>
 
@@ -234,7 +244,10 @@
     </div>
   </div>
 
-  <div id="popup" class="popup"></div>
+  <div id="popup" class="popup">
+    <h3>🚫 ERROR</h3>
+    <p id="popupText"></p>
+  </div>
 
   <script>
     function goToSystem(){
@@ -250,34 +263,13 @@
     function correctFuel(){
       document.getElementById("screen2").classList.remove("active");
       document.getElementById("screen3").classList.add("active");
-      launchConfetti();
     }
 
     function showPopup(text){
-      let popup=document.getElementById("popup");
-      popup.innerText=text;
-      popup.classList.add("show");
-      setTimeout(()=>popup.classList.remove("show"),2000);
+      document.getElementById("popupText").innerText = text;
+      document.getElementById("popup").classList.add("show");
+      setTimeout(()=>document.getElementById("popup").classList.remove("show"),2000);
     }
-
-    function launchConfetti(){
-      for(let i=0;i<120;i++){
-        let conf=document.createElement("div");
-        conf.style.position="absolute";
-        conf.style.width="6px";
-        conf.style.height="6px";
-        conf.style.backgroundColor="hsl("+Math.random()*360+",100%,50%)";
-        conf.style.left=Math.random()*100+"%";
-        conf.style.top="-10px";
-        conf.style.opacity="0.8";
-        conf.style.animation="fall 3s linear forwards";
-        document.body.appendChild(conf);
-      }
-    }
-
-    const style=document.createElement('style');
-    style.innerHTML=`@keyframes fall { to { transform: translateY(110vh); opacity:0; } }`;
-    document.head.appendChild(style);
   </script>
 
 </body>
