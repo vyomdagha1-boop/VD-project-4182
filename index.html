@@ -63,10 +63,10 @@
     <h1>☕ Cold Coffee Security Check</h1>
     <p>Select Dhwanu's correct fuel source:</p>
 
-    <button onclick="wrongFuel()">Tea</button>
-    <button onclick="wrongFuel()">Water</button>
+    <button onclick="teaWrong()">Tea</button>
+    <button onclick="waterWrong()">Water</button>
     <button onclick="correctFuel()">Cold Coffee (No Sugar)</button>
-    <button onclick="wrongFuel()">Protein Shake</button>
+    <button onclick="proteinWrong()">Protein Shake</button>
   </div>
 
   <!-- SCREEN 3 -->
@@ -86,8 +86,16 @@
       alert("Lie detected. You speak 17 thoughts at once.");
     }
 
-    function wrongFuel() {
-      alert("Incorrect. Sugar contamination detected.");
+    function teaWrong() {
+      alert("Aunty hai kya?");
+    }
+
+    function waterWrong() {
+      alert("Too basic for my fancy girl.");
+    }
+
+    function proteinWrong() {
+      alert("Pls dont try to be Vyom.");
     }
 
     function correctFuel() {
