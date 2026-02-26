@@ -1,276 +1,258 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Dhwanu.exe</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dhwanu.exe</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&family=Orbitron:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&family=Orbitron:wght@700&display=swap" rel="stylesheet">
 
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Poppins', sans-serif;
-      overflow: hidden;
-      text-align: center;
-      color: white;
-      background: linear-gradient(-45deg, #ff8fd8, #ffb3e6, #ffd6f3, #ff99cc);
-      background-size: 400% 400%;
-      animation: gradientBG 12s ease infinite;
-    }
+<style>
+body{
+  margin:0;
+  font-family:'Poppins',sans-serif;
+  overflow:hidden;
+  text-align:center;
+  background:linear-gradient(-45deg,#ff8fd8,#ffb3e6,#ffd6f3,#ff99cc);
+  background-size:400% 400%;
+  animation:gradientBG 12s ease infinite;
+  color:white;
+}
+@keyframes gradientBG{
+0%{background-position:0% 50%;}
+50%{background-position:100% 50%;}
+100%{background-position:0% 50%;}
+}
 
-    @keyframes gradientBG {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
+.screen{display:none;padding:40px;margin-top:60px;position:relative;z-index:5;}
+.active{display:block;}
 
-    .screen {
-      display: none;
-      padding: 40px;
-      margin-top: 60px;
-      position: relative;
-      z-index: 5;
-    }
+button{
+padding:15px 30px;
+margin:12px;
+font-size:18px;
+border-radius:40px;
+border:none;
+cursor:pointer;
+font-weight:600;
+background:linear-gradient(45deg,#ff1493,#ff69b4);
+color:white;
+transition:0.3s;
+}
+button:hover{transform:scale(1.1);}
 
-    .active { display: block; }
+.main-btn{box-shadow:0 10px 25px rgba(0,0,0,0.3);}
 
-    h1 { font-weight: 800; font-size: 40px; }
-    p { font-size: 20px; }
+/* HACKER */
+.hacker{
+background:black;
+color:#00ff99;
+font-family:'Orbitron',sans-serif;
+height:100vh;
+padding-top:100px;
+}
+.override-btn{
+background:black;
+color:#00ff99;
+border:2px solid #00ff99;
+box-shadow:0 0 15px #00ff99;
+}
+.override-btn:hover{
+background:#00ff99;
+color:black;
+}
 
-    button {
-      padding: 15px 30px;
-      margin: 12px;
-      font-size: 18px;
-      border-radius: 40px;
-      border: none;
-      cursor: pointer;
-      font-weight: 600;
-      transition: 0.3s;
-    }
+/* GAME AREA */
+#gameArea{
+position:relative;
+width:100%;
+height:70vh;
+overflow:hidden;
+border-radius:30px;
+background:radial-gradient(circle at center,#ff4da6,#b30059);
+box-shadow:0 0 50px rgba(0,0,0,0.5);
+}
 
-    button:hover {
-      transform: scale(1.1);
-    }
+.falling{
+position:absolute;
+font-size:40px;
+cursor:pointer;
+animation:fall linear forwards;
+}
 
-    /* Floating Emojis */
-    .emoji {
-      position: absolute;
-      font-size: 30px;
-      animation: floatUp linear infinite;
-      opacity: 0.7;
-      z-index: 1;
-    }
+@keyframes fall{
+from{top:-50px;}
+to{top:100%;}
+}
 
-    @keyframes floatUp {
-      from { transform: translateY(100vh); }
-      to { transform: translateY(-10vh); }
-    }
+.scoreboard{
+font-size:24px;
+margin-bottom:15px;
+}
 
-    /* INTRO BUTTON */
-    .main-btn {
-      background: linear-gradient(45deg, #ff1493, #ff69b4);
-      color: white;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-    }
+/* COUPONS */
+.coupon-container{
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+gap:20px;
+margin-top:30px;
+}
 
-    /* HACKER SCREEN */
-    .hacker {
-      background: black;
-      color: #00ff99;
-      font-family: 'Orbitron', sans-serif;
-      height: 100vh;
-      padding-top: 100px;
-    }
+.coupon{
+width:280px;
+padding:25px;
+border-radius:20px;
+background:linear-gradient(135deg,#ff1493,#ff69b4);
+box-shadow:0 15px 40px rgba(0,0,0,0.4);
+animation:popIn 0.8s ease forwards;
+transform:scale(0);
+}
+@keyframes popIn{
+to{transform:scale(1);}
+}
+.coupon h3{
+margin-top:0;
+font-size:20px;
+}
+.coupon p{
+font-size:14px;
+opacity:0.9;
+}
 
-    .glitch {
-      animation: glitch 0.4s infinite;
-    }
+/* Confetti */
+.confetti{
+position:absolute;
+width:6px;
+height:6px;
+opacity:0.8;
+animation:fallConfetti 3s linear forwards;
+}
+@keyframes fallConfetti{
+to{transform:translateY(110vh);opacity:0;}
+}
 
-    @keyframes glitch {
-      0% { text-shadow: 2px 2px red; }
-      50% { text-shadow: -2px -2px blue; }
-      100% { text-shadow: 2px -2px lime; }
-    }
-
-    .loading-bar {
-      width: 300px;
-      height: 20px;
-      border: 2px solid #00ff99;
-      margin: 30px auto;
-    }
-
-    .loading-fill {
-      height: 100%;
-      width: 0%;
-      background: #00ff99;
-      animation: load 3s forwards;
-    }
-
-    @keyframes load { to { width: 100%; } }
-
-    .override-btn {
-      background: black;
-      color: #00ff99;
-      border: 2px solid #00ff99;
-      font-family: 'Orbitron', sans-serif;
-      box-shadow: 0 0 15px #00ff99;
-    }
-
-    .override-btn:hover {
-      background: #00ff99;
-      color: black;
-    }
-
-    /* CHALLENGE */
-    .coffee-card {
-      background: linear-gradient(135deg, #ff5fd2, #ff9df0);
-      padding: 40px;
-      border-radius: 30px;
-      display: inline-block;
-      box-shadow: 0 15px 40px rgba(0,0,0,0.3);
-    }
-
-    .challenge-btn {
-      background: linear-gradient(45deg, #ff1493, #ff69b4);
-      color: white;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-    }
-
-    /* ERROR POPUP */
-    .popup {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) scale(0);
-      background: #1a0000;
-      border: 3px solid red;
-      padding: 30px 40px;
-      border-radius: 15px;
-      font-family: 'Courier New', monospace;
-      color: red;
-      width: 300px;
-      text-align: left;
-      box-shadow: 0 0 25px red;
-      transition: 0.3s;
-      z-index: 10;
-    }
-
-    .popup.show {
-      transform: translate(-50%, -50%) scale(1);
-    }
-
-    .popup h3 {
-      margin-top: 0;
-      color: #ff4d4d;
-    }
-
-    /* FINAL */
-    .card {
-      background: rgba(255,255,255,0.2);
-      backdrop-filter: blur(15px);
-      padding: 40px;
-      border-radius: 30px;
-      display: inline-block;
-      animation: fadeIn 1.5s ease forwards;
-    }
-
-    .card img {
-      width: 260px;
-      border-radius: 20px;
-      margin-top: 20px;
-      box-shadow: 0 15px 35px rgba(0,0,0,0.4);
-      animation: floatImage 3s ease-in-out infinite alternate;
-    }
-
-    @keyframes floatImage {
-      from { transform: translateY(0px); }
-      to { transform: translateY(-15px); }
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: scale(0.8); }
-      to { opacity: 1; transform: scale(1); }
-    }
-
-  </style>
+</style>
 </head>
+
 <body>
 
-  <div class="emoji" style="left:15%; animation-duration:12s;">💗</div>
-  <div class="emoji" style="left:50%; animation-duration:16s;">✨</div>
-  <div class="emoji" style="left:80%; animation-duration:14s;">🎀</div>
+<!-- INTRO -->
+<div id="screen0" class="screen active">
+<h1>Hi Dhwani 💗</h1>
+<p>I built this entire website for you.</p>
+<p>From scratch. With zero sleep. And full chaos.</p>
+<p>Proceed at your own risk 😌</p>
+<button onclick="goToSystem()" class="main-btn">Enter the Chaos</button>
+</div>
 
-  <!-- INTRO RESTORED -->
-  <div id="screen0" class="screen active">
-    <h1>Hi Dhwani 💗</h1>
-    <p>I built this entire website for you.</p>
-    <p>From scratch. With zero sleep. And full chaos.</p>
-    <p>Proceed at your own risk 😌</p>
-    <button onclick="goToSystem()" class="main-btn">Enter the Chaos</button>
-  </div>
+<!-- HACKER -->
+<div id="screen1" class="screen hacker">
+<h1>⚠ WEBSITE CRASHED ⚠</h1>
+<p>Reason: Talking Speed Exceeded Human Limits.</p>
+<button onclick="goToGame()" class="override-btn">OVERRIDE SYSTEM</button>
+</div>
 
-  <!-- SYSTEM CRASH -->
-  <div id="screen1" class="screen hacker">
-    <h1 class="glitch">⚠ WEBSITE CRASHED ⚠</h1>
-    <p>Reason: Talking Speed Exceeded Human Limits.</p>
-    <p>Server could not process 17 thoughts per second.</p>
-    <div class="loading-bar">
-      <div class="loading-fill"></div>
-    </div>
-    <button onclick="goToScreen2()" class="override-btn">OVERRIDE SYSTEM</button>
-  </div>
+<!-- GAME -->
+<div id="screen2" class="screen">
+<h1>Cold Coffee Survival Mode ☕</h1>
+<p>Catch Cold Coffee. Avoid Fries. Reach 15 points to unlock rewards.</p>
+<div class="scoreboard">Score: <span id="score">0</span></div>
+<div id="gameArea"></div>
+</div>
 
-  <!-- CHALLENGE -->
-  <div id="screen2" class="screen">
-    <div class="coffee-card">
-      <h1>Fuel The Main Character Energy ✨</h1>
-      <p>Select the correct power source to unlock Dhwanu Mode.</p>
+<!-- COUPONS -->
+<div id="screen3" class="screen">
+<h1>You Won, Dhwanu 😈💖</h1>
+<div class="coupon-container">
 
-      <button class="challenge-btn" onclick="showPopup('Aunty Mode Detected')">🍵 Tea</button>
-      <button class="challenge-btn" onclick="showPopup('Basic Energy Not Allowed')">💧 Water</button>
-      <button class="challenge-btn" onclick="correctFuel()">☕ Cold Coffee (Absolutely no sugar)</button>
-      <button class="challenge-btn" onclick="showPopup('Vyom Clone Attempt Blocked')">💪 Protein Shake</button>
-    </div>
-  </div>
+<div class="coupon">
+<h3>Clingy Mode Activated: 5-Minute Hug Coupon</h3>
+<p>Redeemable anytime. No escape allowed.</p>
+</div>
 
-  <!-- FINAL -->
-  <div id="screen3" class="screen">
-    <div class="card">
-      <h1>Happy Birthday Dhwanu 🎉💖</h1>
-      <p>You are chaos. You are comfort.</p>
-      <p>You are baby. You are boss.</p>
-      <p>I would choose you in every universe.</p>
-      <img src="image.jpg" alt="Us">
-    </div>
-  </div>
+<div class="coupon">
+<h3>Non-Refundable Kiss Voucher</h3>
+<p>No cancellations. No returns. No mercy.</p>
+</div>
 
-  <div id="popup" class="popup">
-    <h3>🚫 ERROR</h3>
-    <p id="popupText"></p>
-  </div>
+<div class="coupon">
+<h3>Cold Coffee & Unnecessary Eye Contact Voucher</h3>
+<p>Strong coffee. Stronger tension.</p>
+</div>
 
-  <script>
-    function goToSystem(){
-      document.getElementById("screen0").classList.remove("active");
-      document.getElementById("screen1").classList.add("active");
-    }
+<div class="coupon">
+<h3>Loser Buys Kisses Arcade Night Pass</h3>
+<p>Winner chooses the punishment.</p>
+</div>
 
-    function goToScreen2(){
-      document.getElementById("screen1").classList.remove("active");
-      document.getElementById("screen2").classList.add("active");
-    }
+</div>
+</div>
 
-    function correctFuel(){
-      document.getElementById("screen2").classList.remove("active");
-      document.getElementById("screen3").classList.add("active");
-    }
+<script>
 
-    function showPopup(text){
-      document.getElementById("popupText").innerText = text;
-      document.getElementById("popup").classList.add("show");
-      setTimeout(()=>document.getElementById("popup").classList.remove("show"),2000);
-    }
-  </script>
+let score=0;
+let gameInterval;
+
+function goToSystem(){
+document.getElementById("screen0").classList.remove("active");
+document.getElementById("screen1").classList.add("active");
+}
+
+function goToGame(){
+document.getElementById("screen1").classList.remove("active");
+document.getElementById("screen2").classList.add("active");
+startGame();
+}
+
+function startGame(){
+const area=document.getElementById("gameArea");
+gameInterval=setInterval(()=>{
+let item=document.createElement("div");
+item.classList.add("falling");
+let isCoffee=Math.random()>0.4;
+item.textContent=isCoffee?"☕":"🍟";
+item.style.left=Math.random()*90+"%";
+item.style.animationDuration=(Math.random()*2+3)+"s";
+
+item.onclick=function(){
+if(isCoffee){
+score++;
+}else{
+score--;
+}
+document.getElementById("score").innerText=score;
+item.remove();
+if(score>=15){
+endGame();
+}
+};
+
+area.appendChild(item);
+
+setTimeout(()=>item.remove(),5000);
+
+},800);
+}
+
+function endGame(){
+clearInterval(gameInterval);
+document.getElementById("screen2").classList.remove("active");
+document.getElementById("screen3").classList.add("active");
+launchConfetti();
+}
+
+function launchConfetti(){
+for(let i=0;i<150;i++){
+let conf=document.createElement("div");
+conf.classList.add("confetti");
+conf.style.backgroundColor="hsl("+Math.random()*360+",100%,50%)";
+conf.style.left=Math.random()*100+"%";
+conf.style.top="-10px";
+document.body.appendChild(conf);
+}
+}
+
+</script>
 
 </body>
 </html>
