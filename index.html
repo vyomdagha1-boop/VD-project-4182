@@ -25,6 +25,7 @@
       margin-top: 100px;
       position: relative;
       z-index: 2;
+      padding: 20px;
     }
 
     .active {
@@ -57,7 +58,6 @@
       transform: scale(1.1);
     }
 
-    /* Floating emojis */
     .emoji {
       position: absolute;
       font-size: 30px;
@@ -66,15 +66,10 @@
     }
 
     @keyframes floatUp {
-      from {
-        transform: translateY(100vh);
-      }
-      to {
-        transform: translateY(-10vh);
-      }
+      from { transform: translateY(100vh); }
+      to { transform: translateY(-10vh); }
     }
 
-    /* Final Card */
     .card {
       background: rgba(255,255,255,0.2);
       backdrop-filter: blur(10px);
@@ -101,8 +96,17 @@
   <div class="emoji" style="left:70%; animation-duration:18s;">✨</div>
   <div class="emoji" style="left:85%; animation-duration:14s;">🎀</div>
 
-  <!-- SCREEN 1 -->
-  <div id="screen1" class="screen active">
+  <!-- INTRO SCREEN -->
+  <div id="screen0" class="screen active">
+    <h1>Hi Dhwani 💗</h1>
+    <p>I built this entire website for you.</p>
+    <p>From scratch. With zero sleep. And full chaos.</p>
+    <p>Proceed at your own risk 😌</p>
+    <button onclick="goToSystem()">Enter the chaos</button>
+  </div>
+
+  <!-- SYSTEM ERROR -->
+  <div id="screen1" class="screen">
     <h1>⚠ SYSTEM ERROR ⚠</h1>
     <p>Too much talking detected.</p>
     <p>Processing speed cannot handle Dhwanu energy.</p>
@@ -111,7 +115,7 @@
     <button onclick="lieDetected()">I will talk less I promise 🤥</button>
   </div>
 
-  <!-- SCREEN 2 -->
+  <!-- COLD COFFEE TEST -->
   <div id="screen2" class="screen">
     <h1>☕ Cold Coffee Security Check</h1>
     <p>Select Dhwanu's correct fuel source:</p>
@@ -122,19 +126,26 @@
     <button onclick="proteinWrong()">Protein Shake</button>
   </div>
 
-  <!-- SCREEN 3 -->
+  <!-- FINAL SCREEN -->
   <div id="screen3" class="screen">
     <div class="card">
       <h1>ACCESS GRANTED 💗</h1>
-      <p>Chaos mode fully activated.</p>
+      <p>You are chaos.</p>
+      <p>You are comfort.</p>
+      <p>You are baby. You are boss.</p>
+      <p>And I would choose you in every universe.</p>
       <p>Happy Birthday Dhwanu 😌</p>
 
-      <!-- Replace image.jpg with your uploaded photo name -->
       <img src="image.jpg" alt="Us together">
     </div>
   </div>
 
   <script>
+    function goToSystem() {
+      document.getElementById("screen0").classList.remove("active");
+      document.getElementById("screen1").classList.add("active");
+    }
+
     function goToScreen2() {
       document.getElementById("screen1").classList.remove("active");
       document.getElementById("screen2").classList.add("active");
