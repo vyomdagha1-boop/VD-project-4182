@@ -5,15 +5,26 @@
   <style>
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
       text-align: center;
       color: white;
-      background-color: #ffb6d9;
+      overflow: hidden;
+      background: linear-gradient(-45deg, #ff9ad5, #ffb6d9, #ffc3e6, #ff8cc6);
+      background-size: 400% 400%;
+      animation: gradientBG 10s ease infinite;
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
     .screen {
       display: none;
       margin-top: 100px;
+      position: relative;
+      z-index: 2;
     }
 
     .active {
@@ -35,18 +46,60 @@
       padding: 15px 25px;
       font-size: 18px;
       margin: 10px;
-      border-radius: 12px;
+      border-radius: 20px;
       cursor: pointer;
       transition: 0.3s;
+      box-shadow: 0 8px 15px rgba(0,0,0,0.2);
     }
 
     button:hover {
       background-color: #ff1a8c;
       transform: scale(1.1);
     }
+
+    /* Floating emojis */
+    .emoji {
+      position: absolute;
+      font-size: 30px;
+      animation: floatUp linear infinite;
+      opacity: 0.7;
+    }
+
+    @keyframes floatUp {
+      from {
+        transform: translateY(100vh);
+      }
+      to {
+        transform: translateY(-10vh);
+      }
+    }
+
+    /* Final Card */
+    .card {
+      background: rgba(255,255,255,0.2);
+      backdrop-filter: blur(10px);
+      padding: 30px;
+      border-radius: 20px;
+      display: inline-block;
+    }
+
+    .card img {
+      width: 250px;
+      border-radius: 20px;
+      margin-top: 15px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    }
+
   </style>
 </head>
 <body>
+
+  <!-- Floating Emojis -->
+  <div class="emoji" style="left:10%; animation-duration:12s;">💗</div>
+  <div class="emoji" style="left:30%; animation-duration:15s;">☕</div>
+  <div class="emoji" style="left:50%; animation-duration:10s;">🍼</div>
+  <div class="emoji" style="left:70%; animation-duration:18s;">✨</div>
+  <div class="emoji" style="left:85%; animation-duration:14s;">🎀</div>
 
   <!-- SCREEN 1 -->
   <div id="screen1" class="screen active">
@@ -71,9 +124,14 @@
 
   <!-- SCREEN 3 -->
   <div id="screen3" class="screen">
-    <h1>ACCESS GRANTED 💗</h1>
-    <p>Chaos mode fully activated.</p>
-    <p>Happy Birthday Dhwanu 😌</p>
+    <div class="card">
+      <h1>ACCESS GRANTED 💗</h1>
+      <p>Chaos mode fully activated.</p>
+      <p>Happy Birthday Dhwanu 😌</p>
+
+      <!-- Replace image.jpg with your uploaded photo name -->
+      <img src="image.jpg" alt="Us together">
+    </div>
   </div>
 
   <script>
