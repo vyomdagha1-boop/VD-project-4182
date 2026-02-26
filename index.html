@@ -34,14 +34,8 @@
 
     .active { display: block; }
 
-    h1 {
-      font-weight: 800;
-      font-size: 40px;
-    }
-
-    p {
-      font-size: 20px;
-    }
+    h1 { font-weight: 800; font-size: 40px; }
+    p { font-size: 20px; }
 
     button {
       padding: 15px 30px;
@@ -50,16 +44,12 @@
       border-radius: 40px;
       border: none;
       cursor: pointer;
-      background: linear-gradient(45deg, #ff1493, #ff69b4);
-      color: white;
       font-weight: 600;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
       transition: 0.3s;
     }
 
     button:hover {
       transform: scale(1.15) rotate(-2deg);
-      box-shadow: 0 15px 35px rgba(0,0,0,0.4);
     }
 
     /* Floating Emojis */
@@ -109,11 +99,22 @@
       animation: load 3s forwards;
     }
 
-    @keyframes load {
-      to { width: 100%; }
+    @keyframes load { to { width: 100%; } }
+
+    .override-btn {
+      background: black;
+      color: #00ff99;
+      border: 2px solid #00ff99;
+      font-family: 'Orbitron', sans-serif;
+      box-shadow: 0 0 15px #00ff99;
     }
 
-    /* Cold Coffee Challenge */
+    .override-btn:hover {
+      background: #00ff99;
+      color: black;
+    }
+
+    /* Challenge Card */
     .coffee-card {
       background: linear-gradient(135deg, #ff5fd2, #ff9df0);
       padding: 40px;
@@ -129,28 +130,30 @@
       100% { transform: scale(1); opacity: 1; }
     }
 
-    .spin {
-      animation: spin 3s linear infinite;
-      font-size: 50px;
+    .challenge-btn {
+      background: linear-gradient(45deg, #ff1493, #ff69b4);
+      color: white;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
     }
 
-    @keyframes spin {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
-
-    /* Popup */
+    /* Custom Popup */
     .popup {
       position: fixed;
-      bottom: 20px;
+      top: 50%;
       left: 50%;
-      transform: translateX(-50%);
-      background: #ff0080;
-      padding: 15px 30px;
+      transform: translate(-50%, -50%) scale(0);
+      background: linear-gradient(135deg, #ff0080, #ff4dc4);
+      padding: 30px 50px;
       border-radius: 30px;
-      display: none;
+      font-size: 22px;
       font-weight: bold;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+      transition: 0.3s;
+      z-index: 10;
+    }
+
+    .popup.show {
+      transform: translate(-50%, -50%) scale(1);
     }
 
     /* Final Card */
@@ -185,42 +188,38 @@
 </head>
 <body>
 
-  <!-- Floating Emojis -->
-  <div class="emoji" style="left:10%; animation-duration:12s;">💗</div>
-  <div class="emoji" style="left:30%; animation-duration:15s;">☕</div>
-  <div class="emoji" style="left:50%; animation-duration:10s;">🍼</div>
-  <div class="emoji" style="left:70%; animation-duration:18s;">✨</div>
-  <div class="emoji" style="left:85%; animation-duration:14s;">🎀</div>
+  <div class="emoji" style="left:15%; animation-duration:12s;">💗</div>
+  <div class="emoji" style="left:50%; animation-duration:16s;">✨</div>
+  <div class="emoji" style="left:80%; animation-duration:14s;">🎀</div>
 
   <!-- INTRO -->
   <div id="screen0" class="screen active">
     <h1>Hi Dhwani 💖</h1>
-    <p>I built this entire chaotic universe for you.</p>
-    <button onclick="goToSystem()">Enter The Chaos 🚀</button>
+    <p>I built this chaotic universe for you.</p>
+    <button onclick="goToSystem()" class="challenge-btn">Enter The Chaos 🚀</button>
   </div>
 
   <!-- SYSTEM CRASH -->
   <div id="screen1" class="screen hacker">
     <h1 class="glitch">⚠ WEBSITE CRASHED ⚠</h1>
-    <p>Reason: Excessive Talking Speed Detected.</p>
-    <p>System Overloaded by Dhwanu Energy.</p>
+    <p>Reason: Talking Speed Exceeded Human Limits.</p>
+    <p>Server could not process 17 thoughts per second.</p>
     <div class="loading-bar">
       <div class="loading-fill"></div>
     </div>
-    <button onclick="goToScreen2()">Override System 💻</button>
+    <button onclick="goToScreen2()" class="override-btn">OVERRIDE SYSTEM</button>
   </div>
 
-  <!-- COLD COFFEE CHAOS -->
+  <!-- NEW CHALLENGE -->
   <div id="screen2" class="screen">
     <div class="coffee-card">
-      <div class="spin">☕✨</div>
-      <h1>Cold Coffee Queen Challenge 👑</h1>
-      <p>Only the real Dhwanu can unlock this...</p>
+      <h1>Fuel The Main Character Energy ✨</h1>
+      <p>Select the correct power source to unlock Dhwanu Mode.</p>
 
-      <button onclick="showPopup('Aunty hai kya? 😂')">🍵 Tea</button>
-      <button onclick="showPopup('Too basic for my fancy girl 💅')">💧 Water</button>
-      <button onclick="correctFuel()">☕ Cold Coffee (No Sugar)</button>
-      <button onclick="showPopup('Pls dont try to be Vyom 🏋️')">💪 Protein Shake</button>
+      <button class="challenge-btn" onclick="showPopup('🍵 Aunty hai kya?')">Tea</button>
+      <button class="challenge-btn" onclick="showPopup('💧 Too basic for my fancy girl')">Water</button>
+      <button class="challenge-btn" onclick="correctFuel()">Unlock Power Source</button>
+      <button class="challenge-btn" onclick="showPopup('🏋️ Pls dont try to be Vyom')">Protein Shake</button>
     </div>
   </div>
 
@@ -257,8 +256,8 @@
     function showPopup(text){
       let popup=document.getElementById("popup");
       popup.innerText=text;
-      popup.style.display="block";
-      setTimeout(()=>popup.style.display="none",2000);
+      popup.classList.add("show");
+      setTimeout(()=>popup.classList.remove("show"),2000);
     }
 
     function launchConfetti(){
