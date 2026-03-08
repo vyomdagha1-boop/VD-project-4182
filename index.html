@@ -44,6 +44,373 @@ transition:0.3s;
 
 button:hover{
 transform:scale(1.1);
+}
+
+#gameArea{
+position:relative;
+width:100%;
+height:60vh;
+overflow:hidden;
+border-radius:30px;
+background:radial-gradient(circle,#ff4da6,#b30059);
+}
+
+.falling{
+position:absolute;
+font-size:40px;
+cursor:pointer;
+animation:fall linear forwards;
+}
+
+@keyframes fall{
+from{top:-50px;}
+to{top:100%;}
+}
+
+.scoreboard{font-size:24px;margin-bottom:15px;}
+
+</style>
+</head>
+
+<body>
+
+<!-- INTRO -->
+
+<div id="screen0" class="screen active">
+
+<h1>Hi Dhwani 💗</h1>
+<p>I built this entire website for you.</p>
+<p>From scratch. With zero sleep. And full chaos.</p>
+
+<button onclick="goTo('screen1')">Enter the Chaos</button>
+
+</div>
+
+<!-- CRASH -->
+
+<div id="screen1" class="screen">
+
+<h1>⚠ WEBSITE CRASHED ⚠</h1>
+<p>Talking speed exceeded server capacity.</p>
+
+<button onclick="goTo('screen2')">OVERRIDE SYSTEM</button>
+
+</div>
+
+<!-- CHALLENGE -->
+
+<div id="screen2" class="screen">
+
+<h1>Fuel The Main Character Energy ✨</h1>
+
+<button onclick="alert('Aunty hai kya?')">🍵 Tea</button>
+<button onclick="alert('Too basic for my fancy girl')">💧 Water</button>
+<button onclick="goTo('screen3')">☕ Cold Coffee (Absolutely no sugar)</button>
+<button onclick="alert('Pls dont try to be Vyom')">💪 Protein Shake</button>
+
+</div>
+
+<!-- BIRTHDAY -->
+
+<div id="screen3" class="screen">
+
+<h1>Happy Birthday Dhwanu 🎉💖</h1>
+
+<img src="image.jpg" width="260">
+
+<br><br>
+
+<button onclick="startGame()">Unlock Your Rewards 🎮</button>
+
+</div>
+
+<!-- GAME -->
+
+<div id="screen4" class="screen">
+
+<h1>Cold Coffee Catch ☕</h1>
+<p>Catch Coffee. First to 5 wins.</p>
+
+<div class="scoreboard">Score: <span id="score">0</span></div>
+
+<div id="gameArea"></div>
+
+</div>
+
+<!-- COUPONS -->
+
+<div id="screen5" class="screen">
+
+<h1>You Won 😈💖</h1>
+
+<p>You've unlocked your coupons.</p>
+
+<button onclick="startQuiz()">Think You Know Us? 😏</button>
+
+</div>
+
+<!-- QUIZ -->
+
+<div id="screen6" class="screen">
+
+<h1>How Well Do You Know Us?</h1>
+
+<div id="quizCard"></div>
+
+</div>
+
+<!-- REASONS -->
+
+<div id="screen7" class="screen">
+
+<h1>❤️ Reasons I Love You</h1>
+
+<h2 id="reasonCounter">0</h2>
+
+<div id="reasonBox">Click below</div>
+
+<button onclick="generateReason()">Generate Another One 💖</button>
+
+<div id="finalReveal" style="display:none">
+<button onclick="finalMessage()">Final Message 💌</button>
+</div>
+
+</div>
+
+<!-- FINAL -->
+
+<div id="finalScreen" style="display:none">
+
+<h1 id="finalText"></h1>
+
+<h2 id="finalSub" style="opacity:0;margin-top:30px;">
+Happy Birthday Dhwanu 💖  
+<br>
+Hope you have the best day and the best year ahead
+</h2>
+
+</div>
+
+<script>
+
+/* SCREEN NAVIGATION */
+
+function goTo(id){
+
+document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'))
+
+document.getElementById(id).classList.add('active')
+
+}
+
+/* GAME */
+
+let score=0
+let gameInterval=null
+
+function startGame(){
+
+goTo('screen4')
+
+score=0
+document.getElementById("score").innerText=score
+
+const gameArea=document.getElementById("gameArea")
+
+gameArea.innerHTML=""
+
+gameInterval=setInterval(()=>{
+
+spawnItem()
+
+},900)
+
+}
+
+function spawnItem(){
+
+const gameArea=document.getElementById("gameArea")
+
+const item=document.createElement("div")
+
+item.className="falling"
+
+const isCoffee=Math.random()>0.4
+
+item.innerText=isCoffee?"☕":"🍟"
+
+item.style.left=Math.random()*90+"%"
+
+item.onclick=function(){
+
+if(isCoffee){
+
+score++
+
+document.getElementById("score").innerText=score
+
+}
+
+item.remove()
+
+if(score>=5){
+
+clearInterval(gameInterval)
+
+goTo('screen5')
+
+}
+
+}
+
+gameArea.appendChild(item)
+
+setTimeout(()=>{
+
+item.remove()
+
+},3000)
+
+}
+
+/* QUIZ */
+
+const questions=[
+
+{q:"Who gets jealous more easily?",a:["Nonchalant Dhwani","Very Much Chalant Vyom"],correct:1},
+
+{q:"Who falls asleep first on calls?",a:["Sleepy Dhwanu","Insomniac Vyom"],correct:0}
+
+]
+
+let qi=0
+
+function startQuiz(){
+
+goTo('screen6')
+
+qi=0
+
+loadQuestion()
+
+}
+
+function loadQuestion(){
+
+const q=questions[qi]
+
+let html=`<h2>${q.q}</h2>`
+
+q.a.forEach((opt,i)=>{
+
+html+=`<div style="margin:10px;padding:10px;background:#ff69b4;border-radius:10px;cursor:pointer" onclick="answer(${i})">${opt}</div>`
+
+})
+
+document.getElementById("quizCard").innerHTML=html
+
+}
+
+function answer(i){
+
+qi++
+
+if(qi>=questions.length){
+
+goTo('screen7')
+
+return
+
+}
+
+loadQuestion()
+
+}
+
+/* REASONS */
+
+const reasons=[
+
+"I love how you understand me even when I don’t say much.",
+"I love how you always support me when things get tough.",
+"I love the way you laugh at my stupid jokes.",
+"I love how you inspire me to become a better person.",
+"I love how we can talk for hours and never get bored.",
+"I love the memories we create together.",
+"I love how your presence makes everything feel right.",
+"I love how you believe in me when I doubt myself.",
+"I love your baby voice.",
+"I love how you listen to me.",
+"I love how you remember small details about me.",
+"I love how you celebrate my wins."
+
+]
+
+let rc=0
+
+function generateReason(){
+
+rc++
+
+document.getElementById("reasonCounter").innerText=rc
+
+document.getElementById("reasonBox").innerText=reasons[Math.floor(Math.random()*reasons.length)]
+
+if(rc>=10){
+
+document.getElementById("finalReveal").style.display="block"
+
+}
+
+}
+
+/* FINAL MESSAGE */
+
+function finalMessage(){
+
+document.getElementById("screen7").classList.remove("active")
+
+document.getElementById("finalScreen").style.display="flex"
+
+const text="This website might be version 1.0... but the story we're building together will have many more updates."
+
+let i=0
+
+function type(){
+
+if(i<text.length){
+
+document.getElementById("finalText").innerHTML+=text[i]
+
+i++
+
+setTimeout(type,40)
+
+}else{
+
+document.getElementById("finalSub").style.opacity=1
+
+}
+
+}
+
+type()
+
+}
+
+</script>
+
+</body>
+</html>cursor:pointer;
+font-weight:700;
+background:linear-gradient(45deg,#ff1493,#ff69b4);
+color:white;
+box-shadow:0 0 20px rgba(255,0,150,0.6);
+transition:0.3s;
+}
+
+button:hover{
+transform:scale(1.1);
 box-shadow:0 0 40px rgba(255,0,200,0.9);
 }
 
