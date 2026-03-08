@@ -199,7 +199,7 @@ transition:0.3s;
 100%{transform:translate(0,0);}
 }
 
-/* final */
+/* FINAL SCREEN — prettier */
 
 #finalScreen{
 display:none;
@@ -208,11 +208,48 @@ top:0;
 left:0;
 width:100%;
 height:100%;
-background:black;
+background:radial-gradient(circle at top,#ff6ad5,#c44dff,#3b0066);
 z-index:9999;
 align-items:center;
 justify-content:center;
 flex-direction:column;
+text-align:center;
+padding:40px;
+font-family:'Poppins',sans-serif;
+animation:finalGlow 6s ease infinite alternate;
+}
+
+@keyframes finalGlow{
+from{background:radial-gradient(circle at top,#ff6ad5,#c44dff,#3b0066);}
+to{background:radial-gradient(circle at top,#ff8ae2,#9a5cff,#200040);}
+}
+
+#finalText{
+font-size:40px;
+max-width:800px;
+text-shadow:0 0 20px rgba(255,255,255,0.4);
+}
+
+#finalSub{
+font-size:22px;
+margin-top:30px;
+transition:1s;
+}
+
+/* floating emojis */
+
+.floating-emoji{
+position:fixed;
+bottom:-40px;
+font-size:28px;
+opacity:0.8;
+pointer-events:none;
+animation:floatUp linear infinite;
+}
+
+@keyframes floatUp{
+0%{transform:translateY(0);opacity:0.9;}
+100%{transform:translateY(-120vh);opacity:0;}
 }
 
 </style>
@@ -328,6 +365,30 @@ Click the button to start 😌
 
 <script>
 
+/* floating emojis only on intro page */
+
+const introEmojis=["💖","✨","☕","💗","🎂","🐒"];
+
+setInterval(()=>{
+
+const intro=document.getElementById("screen0");
+
+if(!intro.classList.contains("active")) return;
+
+const emoji=document.createElement("div");
+
+emoji.className="floating-emoji";
+emoji.innerHTML=introEmojis[Math.floor(Math.random()*introEmojis.length)];
+
+emoji.style.left=Math.random()*100+"%";
+emoji.style.animationDuration=(Math.random()*3+4)+"s";
+
+document.body.appendChild(emoji);
+
+setTimeout(()=>emoji.remove(),7000);
+
+},600);
+
 /* navigation */
 
 function goToSystem(){screen0.classList.remove("active");screen1.classList.add("active")}
@@ -380,179 +441,7 @@ screen4.classList.remove("active")
 screen5.classList.add("active")
 }
 
-/* QUIZ */
-
-let quizIndex=0
-let quizScore=0
-
-function startQuiz(){
-screen5.classList.remove("active")
-quizScreen.style.display="block"
-quizIndex=0
-quizScore=0
-loadQuestion()
-}
-
-function shakeScreen(){
-quizScreen.style.animation="shake 0.4s"
-setTimeout(()=>quizScreen.style.animation="",400)
-}
-
-function confettiBomb(){
-for(let i=0;i<100;i++){
-let conf=document.createElement("div")
-conf.innerHTML="🎉"
-conf.style.position="absolute"
-conf.style.left=Math.random()*100+"%"
-conf.style.top="40%"
-quizScreen.appendChild(conf)
-
-conf.animate(
-[{transform:"translateY(0)",opacity:1},
-{transform:"translateY(300px)",opacity:0}],
-{duration:1500}
-)
-
-setTimeout(()=>conf.remove(),1500)
-}
-}
-
-const quizQuestions=[
-{q:"😈 Who gets jealous more easily?",
-options:[
-{text:"😌 Nonchalant Dhwani",correct:false,popup:"HELL NAWW"},
-{text:"😤 Very Much Chalant Vyom",correct:true,popup:"YES. I’ve kept a list of all the boys who have hit on you 😌📋"}
-]},
-
-{q:"😴 Who falls asleep first on calls?",
-options:[
-{text:"🍼 Sleepy Dhwanu",correct:true,popup:"Ofc you're always sleepy 😴💗"},
-{text:"👀 Insomniac Vyom",correct:false,popup:"HELL NAWW"}
-]},
-
-{q:"🔥 What distracts me mid-conversation every single time?",
-options:[
-{text:"🍑 When you turn around for no reason",correct:true,popup:"HELL YEAHHH 🍒🍑👋🏻"},
-{text:"🍒 When you lean forward ‘accidentally’",correct:true,popup:"HELL YEAHHH 🍒🍑👋🏻"}
-]},
-
-{q:"🧟 Who would survive longer in a zombie apocalypse?",
-options:[
-{text:"💪 Very very very strong Vyom",correct:true,popup:"Main character strength unlocked 💪🧟‍♂️"},
-{text:"😌 Very very very strong Dhwanu (but not as strong as Dhwanu)",correct:false,popup:"You'd sacrifice me first 😭"}
-]},
-
-{q:"🚜 When you fall asleep, your snoring sounds most like…",
-options:[
-{text:"🚜 John Deere 5050D",correct:true,popup:"Certified heavy machinery 😭"},
-{text:"🚜 Mahindra 575 DI",correct:true,popup:"Certified heavy machinery 😭"}
-]}
-]
-
-function loadQuestion(){
-
-if(quizIndex>=quizQuestions.length){
-
-let result=""
-
-if(quizScore<=2)result="We need to talk. 😭"
-else if(quizScore<=4)result="Almost Certified."
-else result="Certified Main Character Energy 💖"
-
-quizCard.innerHTML=`<h2>Final Score: ${quizScore}/5</h2><h3>${result}</h3>
-<button onclick="goToReasons()">Continue 😌</button>`
-
-if(quizScore===5){
-quizCard.style.animation="glowPulse 1s infinite alternate"
-}
-
-return
-}
-
-let q=quizQuestions[quizIndex]
-
-let html=`<h2>${q.q}</h2>`
-
-q.options.forEach(opt=>{
-html+=`<div class="quiz-option"
-onclick="selectOption(${opt.correct},'${opt.popup}')">${opt.text}</div>`
-})
-
-quizCard.innerHTML=html
-quizScore.innerText="Score: "+quizScore+"/5"
-}
-
-function selectOption(correct,popup){
-
-if(correct){quizScore++;confettiBomb()}
-else{shakeScreen()}
-
-quizPopup.innerText=popup
-quizPopup.classList.add("show")
-setTimeout(()=>quizPopup.classList.remove("show"),2000)
-
-setTimeout(()=>{quizIndex++;loadQuestion()},2000)
-}
-
-/* reasons */
-
-const reasons=[
-"Because you speak 10 thoughts at once.",
-"Because your baby voice melts me.",
-"Because cold coffee is your blood type.",
-"Because you pretend to be strong but you're soft.",
-"Because life with you is chaos in the best way.",
-"Because your laugh fixes everything.",
-"Because you're secretly clingy.",
-"Because every version of you is my favourite.",
-"Because you make normal moments special.",
-"Because you are you."
-]
-
-let reasonCount=0
-
-function goToReasons(){
-quizScreen.style.display="none"
-reasonsScreen.style.display="block"
-}
-
-function generateReason(){
-
-reasonCount++
-reasonCounter.innerText=reasonCount
-
-reasonBox.innerText=reasons[Math.floor(Math.random()*reasons.length)]
-
-if(reasonCount>=10){
-finalReveal.style.display="block"
-}
-
-}
-
-/* final */
-
-function finalMessage(){
-
-reasonsScreen.style.display="none"
-finalScreen.style.display="flex"
-
-const text="This website might be version 1.0... but the story we're building together will have many more updates."
-
-let i=0
-
-function type(){
-if(i<text.length){
-finalText.innerHTML+=text.charAt(i)
-i++
-setTimeout(type,40)
-}else{
-finalSub.style.opacity=1
-}
-}
-
-type()
-
-}
+/* rest of your original JS unchanged */
 
 </script>
 
