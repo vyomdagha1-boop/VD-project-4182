@@ -249,21 +249,10 @@ flex-direction:column;
 <div id="screen3" class="screen">
 <div class="card">
 <h1>Happy Birthday Dhwanu 🎉💖</h1>
-
-<p style="line-height:1.7;margin-top:15px;">
-I love how you understand me even when I don’t say much.<br>
-I love how you always support me when things get tough.<br>
-I love the way you laugh at my stupid jokes.<br>
-I love how you inspire me to become a better person.<br>
-I love how we can talk for hours and never get bored.<br>
-I love the memories we create together.<br>
-I love how your presence makes everything feel right.<br>
-I love how you believe in me when I doubt myself.<br>
-I love how your baby voice melts me.
-</p>
-
+<p>You are chaos. You are comfort.</p>
+<p>You are baby. You are boss.</p>
+<p>I would choose you in every universe.</p>
 <img src="image.jpg">
-
 <br>
 <button onclick="startGame()">Unlock Your Rewards 🎮</button>
 </div>
@@ -281,7 +270,6 @@ I love how your baby voice melts me.
 <div id="screen5" class="screen">
 <h1>You Won 😈💖</h1>
 <div class="coupon-container">
-
 <div class="coupon">
 <h3>Clingy Mode Activated: 5-Minute Hug Coupon</h3>
 <p>Redeem anytime. No escape allowed.</p>
@@ -301,7 +289,6 @@ I love how your baby voice melts me.
 <h3>Loser Buys Kisses Arcade Night Pass</h3>
 <p>Winner chooses punishment.</p>
 </div>
-
 </div>
 
 <button onclick="startQuiz()">Think You Know Us? 😏</button>
@@ -333,7 +320,7 @@ Click the button to start 😌
 </div>
 </div>
 
-<!-- FINAL -->
+<!-- FINAL SCREEN -->
 <div id="finalScreen">
 <h1 id="finalText"></h1>
 <h2 id="finalSub" style="opacity:0;">Happy Birthday Dhwanu 💖</h2>
@@ -369,32 +356,22 @@ gameInterval=setInterval(spawnItem,900)
 }
 
 function spawnItem(){
-
 let item=document.createElement("div")
 item.classList.add("falling")
-
 let isCoffee=Math.random()>0.4
-
 item.innerText=isCoffee?"☕":"🍟"
 item.style.left=Math.random()*90+"%"
 item.style.animationDuration="3s"
 
 item.onclick=function(){
-
-if(isCoffee){score++}
-else{score--}
-
+if(isCoffee){score++}else{score--}
 document.getElementById("score").innerText=score
 item.remove()
-
 if(score>=5){endGame()}
-
 }
 
 gameArea.appendChild(item)
-
 setTimeout(()=>item.remove(),3000)
-
 }
 
 function endGame(){
@@ -406,13 +383,13 @@ screen5.classList.add("active")
 /* QUIZ */
 
 let quizIndex=0
-let quizPoints=0
+let quizScore=0
 
 function startQuiz(){
 screen5.classList.remove("active")
 quizScreen.style.display="block"
 quizIndex=0
-quizPoints=0
+quizScore=0
 loadQuestion()
 }
 
@@ -441,7 +418,6 @@ setTimeout(()=>conf.remove(),1500)
 }
 
 const quizQuestions=[
-
 {q:"😈 Who gets jealous more easily?",
 options:[
 {text:"😌 Nonchalant Dhwani",correct:false,popup:"HELL NAWW"},
@@ -471,7 +447,6 @@ options:[
 {text:"🚜 John Deere 5050D",correct:true,popup:"Certified heavy machinery 😭"},
 {text:"🚜 Mahindra 575 DI",correct:true,popup:"Certified heavy machinery 😭"}
 ]}
-
 ]
 
 function loadQuestion(){
@@ -480,12 +455,16 @@ if(quizIndex>=quizQuestions.length){
 
 let result=""
 
-if(quizPoints<=2)result="We need to talk. 😭"
-else if(quizPoints<=4)result="Almost Certified."
+if(quizScore<=2)result="We need to talk. 😭"
+else if(quizScore<=4)result="Almost Certified."
 else result="Certified Main Character Energy 💖"
 
-quizCard.innerHTML=`<h2>Final Score: ${quizPoints}/5</h2><h3>${result}</h3>
+quizCard.innerHTML=`<h2>Final Score: ${quizScore}/5</h2><h3>${result}</h3>
 <button onclick="goToReasons()">Continue 😌</button>`
+
+if(quizScore===5){
+quizCard.style.animation="glowPulse 1s infinite alternate"
+}
 
 return
 }
@@ -500,13 +479,12 @@ onclick="selectOption(${opt.correct},'${opt.popup}')">${opt.text}</div>`
 })
 
 quizCard.innerHTML=html
-document.getElementById("quizScore").innerText="Score: "+quizPoints+"/5"
-
+quizScore.innerText="Score: "+quizScore+"/5"
 }
 
 function selectOption(correct,popup){
 
-if(correct){quizPoints++;confettiBomb()}
+if(correct){quizScore++;confettiBomb()}
 else{shakeScreen()}
 
 quizPopup.innerText=popup
@@ -514,7 +492,6 @@ quizPopup.classList.add("show")
 setTimeout(()=>quizPopup.classList.remove("show"),2000)
 
 setTimeout(()=>{quizIndex++;loadQuestion()},2000)
-
 }
 
 /* reasons */
@@ -532,7 +509,6 @@ const reasons=[
 "Because you are you."
 ]
 
-let shuffledReasons=[...reasons].sort(()=>Math.random()-0.5)
 let reasonCount=0
 
 function goToReasons(){
@@ -542,16 +518,12 @@ reasonsScreen.style.display="block"
 
 function generateReason(){
 
-if(reasonCount<shuffledReasons.length){
-
-reasonBox.innerText=shuffledReasons[reasonCount]
 reasonCount++
-
 reasonCounter.innerText=reasonCount
 
-}
+reasonBox.innerText=reasons[Math.floor(Math.random()*reasons.length)]
 
-if(reasonCount>=shuffledReasons.length){
+if(reasonCount>=10){
 finalReveal.style.display="block"
 }
 
@@ -569,16 +541,13 @@ const text="This website might be version 1.0... but the story we're building to
 let i=0
 
 function type(){
-
 if(i<text.length){
 finalText.innerHTML+=text.charAt(i)
 i++
 setTimeout(type,40)
-}
-else{
+}else{
 finalSub.style.opacity=1
 }
-
 }
 
 type()
@@ -588,4 +557,4 @@ type()
 </script>
 
 </body>
-</html>
+</html> 
