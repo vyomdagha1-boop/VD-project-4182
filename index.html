@@ -3,9 +3,11 @@
 <head>
 <title>Dhwanu.exe</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&family=Orbitron:wght@700&display=swap" rel="stylesheet">
 
 <style>
+
 body{
 margin:0;
 font-family:'Poppins',sans-serif;
@@ -23,23 +25,8 @@ animation:gradientBG 12s ease infinite;
 100%{background-position:0% 50%;}
 }
 
-/* 3. Smooth Screen Transitions Fix */
-.screen, #quizScreen, #reasonsScreen {
-    display: none;
-    opacity: 0;
-    transition: opacity 0.8s ease, display 0.8s ease allow-discrete;
-    padding: 40px;
-    margin-top: 60px;
-}
-
-.active {
-    display: block !important;
-    opacity: 1 !important;
-}
-
-@starting-style {
-    .active { opacity: 0; }
-}
+.screen{display:none;padding:40px;margin-top:60px;}
+.active{display:block;}
 
 button{
 padding:15px 30px;
@@ -52,286 +39,522 @@ font-weight:600;
 background:linear-gradient(45deg,#ff1493,#ff69b4);
 color:white;
 }
+
 button:hover{transform:scale(1.1);}
 
-/* 1. Floating Emojis (Screen 0 Only) */
-#screen0 { position: relative; height: 100vh; margin: 0; display: flex; flex-direction: column; justify-content: center; }
-.floating-emoji {
-    position: absolute;
-    bottom: -50px;
-    font-size: 25px;
-    animation: floatUp 6s linear infinite;
-    opacity: 0;
-    pointer-events: none;
-}
-@keyframes floatUp {
-    0% { transform: translateY(0) rotate(0deg); opacity: 0; }
-    20% { opacity: 0.7; }
-    100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+/* hacker */
+
+.hacker{
+background:black;
+color:#00ff99;
+font-family:'Orbitron',sans-serif;
+height:100vh;
+padding-top:100px;
 }
 
-.hacker{background:black; color:#00ff99; font-family:'Orbitron',sans-serif; height:100vh; padding-top:100px; margin-top:0;}
-.override-btn{background:black; color:#00ff99; border:2px solid #00ff99;}
+.override-btn{
+background:black;
+color:#00ff99;
+border:2px solid #00ff99;
+}
+
+/* popup */
 
 .popup{
-position:fixed; top:50%; left:50%; transform:translate(-50%,-50%) scale(0);
-background:#1a0000; border:3px solid red; padding:30px; border-radius:15px; color:red; transition:0.3s; z-index: 1000;
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%) scale(0);
+background:#1a0000;
+border:3px solid red;
+padding:30px;
+border-radius:15px;
+color:red;
+transition:0.3s;
 }
-.popup.show{ transform:translate(-50%,-50%) scale(1); }
 
-.card{ background:rgba(255,255,255,0.2); backdrop-filter:blur(15px); padding:40px; border-radius:30px; display:inline-block; }
-.card img{ width:260px; border-radius:20px; margin-top:20px; }
+.popup.show{
+transform:translate(-50%,-50%) scale(1);
+}
 
-#gameArea{ position:relative; width:100%; height:60vh; overflow:hidden; border-radius:30px; background:radial-gradient(circle,#ff4da6,#b30059); }
-.falling{ position:absolute; font-size:40px; cursor:pointer; animation:fall linear forwards; }
-@keyframes fall{ from{top:-50px;} to{top:100%;} }
+/* birthday card */
 
-.coupon-container{ display:flex; flex-wrap:wrap; justify-content:center; gap:20px; }
-.coupon{ width:260px; padding:20px; border-radius:20px; background:linear-gradient(135deg,#ff1493,#ff69b4); }
+.card{
+background:rgba(255,255,255,0.2);
+backdrop-filter:blur(15px);
+padding:40px;
+border-radius:30px;
+display:inline-block;
+}
 
-#quizScreen{ background:linear-gradient(270deg,#1f0036,#4b0082,#8a2be2,#ff00aa); background-size:800% 800%; animation:quizBG 15s ease infinite; margin-top:0; min-height:100vh;}
-@keyframes quizBG{ 0%{background-position:0% 50%;} 50%{background-position:100% 50%;} 100%{background-position:0% 50%;} }
-.quiz-card{ max-width:700px; margin:auto; background:rgba(255,255,255,0.1); padding:40px; border-radius:30px; }
-.quiz-option{ margin:15px 0; padding:15px; border-radius:20px; background:linear-gradient(45deg,#ff1493,#ff69b4); cursor:pointer; }
-#quizScore { position:fixed; top:20px; right:20px; background:black; padding:10px 20px; border-radius:20px; z-index: 10;}
+.card img{
+width:260px;
+border-radius:20px;
+margin-top:20px;
+}
 
-/* 2. Pretty Final Screen */
+/* game */
+
+#gameArea{
+position:relative;
+width:100%;
+height:60vh;
+overflow:hidden;
+border-radius:30px;
+background:radial-gradient(circle,#ff4da6,#b30059);
+}
+
+.falling{
+position:absolute;
+font-size:40px;
+cursor:pointer;
+animation:fall linear forwards;
+}
+
+@keyframes fall{
+from{top:-50px;}
+to{top:100%;}
+}
+
+.scoreboard{font-size:24px;margin-bottom:15px;}
+
+/* coupons */
+
+.coupon-container{
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+gap:20px;
+}
+
+.coupon{
+width:260px;
+padding:20px;
+border-radius:20px;
+background:linear-gradient(135deg,#ff1493,#ff69b4);
+}
+
+/* quiz */
+
+#quizScreen{
+display:none;
+min-height:100vh;
+padding:60px;
+background:linear-gradient(270deg,#1f0036,#4b0082,#8a2be2,#ff00aa);
+background-size:800% 800%;
+animation:quizBG 15s ease infinite;
+}
+
+@keyframes quizBG{
+0%{background-position:0% 50%;}
+50%{background-position:100% 50%;}
+100%{background-position:0% 50%;}
+}
+
+.quiz-card{
+max-width:700px;
+margin:auto;
+background:rgba(255,255,255,0.1);
+padding:40px;
+border-radius:30px;
+}
+
+.quiz-option{
+margin:15px 0;
+padding:15px;
+border-radius:20px;
+background:linear-gradient(45deg,#ff1493,#ff69b4);
+cursor:pointer;
+}
+
+#quizScore{
+position:fixed;
+top:20px;
+right:20px;
+background:black;
+padding:10px 20px;
+border-radius:20px;
+}
+
+.quiz-popup{
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%) scale(0);
+background:black;
+padding:25px 40px;
+border-radius:20px;
+transition:0.3s;
+}
+
+.quiz-popup.show{transform:translate(-50%,-50%) scale(1);}
+
+/* shake */
+
+@keyframes shake{
+0%{transform:translate(2px,2px);}
+25%{transform:translate(-2px,2px);}
+50%{transform:translate(2px,-2px);}
+75%{transform:translate(-2px,-2px);}
+100%{transform:translate(0,0);}
+}
+
+/* final */
+
 #finalScreen{
-display:none; position:fixed; top:0; left:0; width:100%; height:100%;
-background: radial-gradient(circle at center, #2b001d 0%, #000000 100%);
-z-index:9999; align-items:center; justify-content:center; flex-direction:column; text-align: center; padding: 20px;
-}
-#finalText {
-    font-size: 26px; font-weight: 600; line-height: 1.6; max-width: 85%;
-    background: linear-gradient(to bottom, #ff99cc, #ffffff);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    text-shadow: 0 0 15px rgba(255, 20, 147, 0.4);
-}
-#finalSub {
-    margin-top: 40px; font-family: 'Orbitron', sans-serif; font-size: 20px;
-    color: #ff69b4; letter-spacing: 4px; text-shadow: 0 0 12px #ff1493;
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:black;
+z-index:9999;
+align-items:center;
+justify-content:center;
+flex-direction:column;
 }
 
-@keyframes shake{ 0%{transform:translate(2px,2px);} 25%{transform:translate(-2px,2px);} 50%{transform:translate(2px,-2px);} 75%{transform:translate(-2px,-2px);} 100%{transform:translate(0,0);} }
 </style>
 </head>
 
 <body>
 
+<!-- INTRO -->
 <div id="screen0" class="screen active">
-    <div id="emojiContainer"></div>
-    <h1>Hi Dhwani 💗</h1>
-    <p>I built this entire website for you.</p>
-    <p>From scratch. With zero sleep. And full chaos.</p>
-    <p>Proceed at your own risk 😌</p>
-    <button onclick="goToSystem()">Enter the Chaos</button>
+<h1>Hi Dhwani 💗</h1>
+<p>I built this entire website for you.</p>
+<p>From scratch. With zero sleep. And full chaos.</p>
+<p>Proceed at your own risk 😌</p>
+<button onclick="goToSystem()">Enter the Chaos</button>
 </div>
 
+<!-- HACKER -->
 <div id="screen1" class="screen hacker">
-    <h1>⚠ WEBSITE CRASHED ⚠</h1>
-    <p>Talking speed exceeded server capacity.</p>
-    <button onclick="goToChallenge()" class="override-btn">OVERRIDE SYSTEM</button>
+<h1>⚠ WEBSITE CRASHED ⚠</h1>
+<p>Talking speed exceeded server capacity.</p>
+<button onclick="goToChallenge()" class="override-btn">OVERRIDE SYSTEM</button>
 </div>
 
+<!-- CHALLENGE -->
 <div id="screen2" class="screen">
-    <h1>Fuel The Main Character Energy ✨</h1>
-    <button onclick="showPopup('HELL NAWW')">🍵 Tea</button>
-    <button onclick="showPopup('Too basic for my fancy girl')">💧 Water</button>
-    <button onclick="goToFinal()">☕ Cold Coffee (Absolutely no sugar)</button>
-    <button onclick="showPopup('Pls dont try to be Vyom')">💪 Protein Shake</button>
+<h1>Fuel The Main Character Energy ✨</h1>
+<button onclick="showPopup('HELL NAWW')">🍵 Tea</button>
+<button onclick="showPopup('Too basic for my fancy girl')">💧 Water</button>
+<button onclick="goToFinal()">☕ Cold Coffee (Absolutely no sugar)</button>
+<button onclick="showPopup('Pls dont try to be Vyom')">💪 Protein Shake</button>
 </div>
 
+<!-- BIRTHDAY -->
 <div id="screen3" class="screen">
-    <div class="card">
-        <h1>Happy Birthday Dhwanu 🎉💖</h1>
-        <p>You are chaos. You are comfort.</p>
-        <p>You are baby. You are boss.</p>
-        <p>I would choose you in every universe.</p>
-        <img src="image.jpg">
-        <br><button onclick="startGame()">Unlock Your Rewards 🎮</button>
-    </div>
+<div class="card">
+<h1>Happy Birthday Dhwanu 🎉💖</h1>
+<p>You are chaos. You are comfort.</p>
+<p>You are baby. You are boss.</p>
+<p>I would choose you in every universe.</p>
+<img src="image.jpg">
+<br>
+<button onclick="startGame()">Unlock Your Rewards 🎮</button>
+</div>
 </div>
 
+<!-- GAME -->
 <div id="screen4" class="screen">
-    <h1>Cold Coffee Catch ☕</h1>
-    <p>Catch Coffee. Avoid Fries. First to 5 wins.</p>
-    <div class="scoreboard">Score: <span id="scoreDisplay">0</span></div>
-    <div id="gameArea"></div>
+<h1>Cold Coffee Catch ☕</h1>
+<p>Catch Coffee. Avoid Fries. First to 5 wins.</p>
+<div class="scoreboard">Score: <span id="score">0</span></div>
+<div id="gameArea"></div>
 </div>
 
+<!-- COUPONS -->
 <div id="screen5" class="screen">
-    <h1>You Won 😈💖</h1>
-    <div class="coupon-container">
-        <div class="coupon"><h3>Clingy Mode Activated: 5-Minute Hug Coupon</h3><p>Redeem anytime.</p></div>
-        <div class="coupon"><h3>Non-Refundable Kiss Voucher</h3><p>No cancellations.</p></div>
-        <div class="coupon"><h3>Cold Coffee & Unnecessary Eye Contact</h3><p>Stronger tension.</p></div>
-        <div class="coupon"><h3>Loser Buys Kisses Arcade Pass</h3><p>Winner chooses punishment.</p></div>
-    </div>
-    <button onclick="startQuiz()">Think You Know Us? 😏</button>
+<h1>You Won 😈💖</h1>
+<div class="coupon-container">
+<div class="coupon">
+<h3>Clingy Mode Activated: 5-Minute Hug Coupon</h3>
+<p>Redeem anytime. No escape allowed.</p>
 </div>
 
+<div class="coupon">
+<h3>Non-Refundable Kiss Voucher</h3>
+<p>No cancellations. No returns. No mercy.</p>
+</div>
+
+<div class="coupon">
+<h3>Cold Coffee & Unnecessary Eye Contact Voucher</h3>
+<p>Strong coffee. Stronger tension.</p>
+</div>
+
+<div class="coupon">
+<h3>Loser Buys Kisses Arcade Night Pass</h3>
+<p>Winner chooses punishment.</p>
+</div>
+</div>
+
+<button onclick="startQuiz()">Think You Know Us? 😏</button>
+</div>
+
+<!-- QUIZ -->
 <div id="quizScreen">
-    <div id="quizScore">Score: 0/5</div>
-    <div class="quiz-card" id="quizCard"></div>
+<div id="quizScore">Score: 0/5</div>
+<div class="quiz-card" id="quizCard"></div>
 </div>
 
 <div id="quizPopup" class="quiz-popup"></div>
 <div id="popup" class="popup"><p id="popupText"></p></div>
 
-<div id="reasonsScreen">
-    <h1>❤️ Reasons I Love You</h1>
-    <h2 id="reasonCounter">0</h2>
-    <div id="reasonBox" style="max-width:700px;margin:auto;padding:30px;background:rgba(255,255,255,0.15);border-radius:20px; min-height: 100px; display: flex; align-items: center; justify-content: center;">
-        Click the button to start 😌
-    </div>
-    <button onclick="generateReason()">Generate Another One 💖</button>
-    <div id="finalReveal" style="display:none;margin-top:40px;">
-        <h2>And I'm still discovering new reasons every day.</h2>
-        <button onclick="finalMessage()">Final Message 💌</button>
-    </div>
+<!-- REASONS -->
+<div id="reasonsScreen" style="display:none;padding:60px;">
+<h1>❤️ Reasons I Love You</h1>
+<h2 id="reasonCounter">0</h2>
+
+<div id="reasonBox" style="max-width:700px;margin:auto;padding:30px;background:rgba(255,255,255,0.15);border-radius:20px;">
+Click the button to start 😌
 </div>
 
+<button onclick="generateReason()">Generate Another One 💖</button>
+
+<div id="finalReveal" style="display:none;margin-top:40px;">
+<h2>And I'm still discovering new reasons every day.</h2>
+<button onclick="finalMessage()">Final Message 💌</button>
+</div>
+</div>
+
+<!-- FINAL SCREEN -->
 <div id="finalScreen">
-    <h1 id="finalText"></h1>
-    <h2 id="finalSub" style="opacity:0;">Happy Birthday Dhwanu 💖</h2>
+<h1 id="finalText"></h1>
+<h2 id="finalSub" style="opacity:0;">Happy Birthday Dhwanu 💖</h2>
 </div>
 
 <script>
-/* 3. Improved Transitions Function */
-function transitionTo(fromId, toId) {
-    const from = document.getElementById(fromId);
-    const to = document.getElementById(toId);
-    from.classList.remove("active");
-    setTimeout(() => {
-        to.classList.add("active");
-    }, 50); 
-}
 
-function goToSystem(){ transitionTo("screen0", "screen1"); }
-function goToChallenge(){ transitionTo("screen1", "screen2"); }
-function goToFinal(){ transitionTo("screen2", "screen3"); }
+/* navigation */
 
-/* 1. Floating Emojis Logic */
-function createEmojis() {
-    const emojis = ['💖', '✨', '🌸', '🎀', '🍭', '🧸'];
-    const container = document.getElementById('emojiContainer');
-    for(let i=0; i<18; i++) {
-        let span = document.createElement('span');
-        span.innerText = emojis[Math.floor(Math.random()*emojis.length)];
-        span.className = 'floating-emoji';
-        span.style.left = Math.random() * 95 + 'vw';
-        span.style.animationDelay = Math.random() * 5 + 's';
-        span.style.fontSize = (Math.random() * 20 + 20) + 'px';
-        container.appendChild(span);
-    }
-}
-createEmojis();
+function goToSystem(){screen0.classList.remove("active");screen1.classList.add("active")}
+function goToChallenge(){screen1.classList.remove("active");screen2.classList.add("active")}
+function goToFinal(){screen2.classList.remove("active");screen3.classList.add("active")}
+
+/* popup */
 
 function showPopup(text){
-    popupText.innerText=text; popup.classList.add("show");
-    setTimeout(()=>popup.classList.remove("show"),2000);
+popupText.innerText=text
+popup.classList.add("show")
+setTimeout(()=>popup.classList.remove("show"),2000)
 }
 
 /* GAME */
-let score=0; let gameInterval;
+
+let score=0
+let gameInterval
+
 function startGame(){
-    transitionTo("screen3", "screen4");
-    score=0; document.getElementById("scoreDisplay").innerText=score;
-    gameInterval=setInterval(spawnItem,900);
+screen3.classList.remove("active")
+screen4.classList.add("active")
+score=0
+document.getElementById("score").innerText=score
+gameInterval=setInterval(spawnItem,900)
 }
 
 function spawnItem(){
-    let item=document.createElement("div");
-    item.classList.add("falling");
-    let isCoffee=Math.random()>0.4;
-    item.innerText=isCoffee?"☕":"🍟";
-    item.style.left=Math.random()*90+"%";
-    item.style.animationDuration="3s";
-    item.onclick=function(){
-        if(isCoffee){score++}else{score--}
-        document.getElementById("scoreDisplay").innerText=score;
-        item.remove();
-        if(score>=5){ endGame(); }
-    };
-    gameArea.appendChild(item);
-    setTimeout(()=>item.remove(),3000);
+let item=document.createElement("div")
+item.classList.add("falling")
+let isCoffee=Math.random()>0.4
+item.innerText=isCoffee?"☕":"🍟"
+item.style.left=Math.random()*90+"%"
+item.style.animationDuration="3s"
+
+item.onclick=function(){
+if(isCoffee){score++}else{score--}
+document.getElementById("score").innerText=score
+item.remove()
+if(score>=5){endGame()}
+}
+
+gameArea.appendChild(item)
+setTimeout(()=>item.remove(),3000)
 }
 
 function endGame(){
-    clearInterval(gameInterval);
-    transitionTo("screen4", "screen5");
+clearInterval(gameInterval)
+screen4.classList.remove("active")
+screen5.classList.add("active")
 }
 
 /* QUIZ */
-let quizIndex=0; let quizScoreVal=0;
-const quizQuestions=[
-    {q:"😈 Who gets jealous more easily?", options:[{text:"😌 Nonchalant Dhwani",correct:false,popup:"HELL NAWW"},{text:"😤 Very Much Chalant Vyom",correct:true,popup:"YES. I’ve kept a list of all the boys 😌📋"}]},
-    {q:"😴 Who falls asleep first on calls?", options:[{text:"🍼 Sleepy Dhwanu",correct:true,popup:"Ofc you're always sleepy 😴💗"},{text:"👀 Insomniac Vyom",correct:false,popup:"HELL NAWW"}]},
-    {q:"🔥 What distracts me mid-conversation?", options:[{text:"🍑 When you turn around",correct:true,popup:"HELL YEAHHH 🍒🍑👋🏻"},{text:"🍒 When you lean forward",correct:true,popup:"HELL YEAHHH 🍒🍑👋🏻"}]},
-    {q:"Zombie apocalypse survivors?", options:[{text:"💪 Strong Vyom",correct:true,popup:"Main character strength 💪🧟‍♂️"},{text:"😌 Strong Dhwanu",correct:false,popup:"You'd sacrifice me first 😭"}]},
-    {q:"🚜 Your snoring sounds like…", options:[{text:"🚜 John Deere 5050D",correct:true,popup:"Certified heavy machinery 😭"},{text:"🚜 Mahindra 575 DI",correct:true,popup:"Certified heavy machinery 😭"}]}
-];
+
+let quizIndex=0
+let quizScore=0
 
 function startQuiz(){
-    transitionTo("screen5", "quizScreen");
-    quizIndex=0; quizScoreVal=0; loadQuestion();
+screen5.classList.remove("active")
+quizScreen.style.display="block"
+quizIndex=0
+quizScore=0
+loadQuestion()
 }
+
+function shakeScreen(){
+quizScreen.style.animation="shake 0.4s"
+setTimeout(()=>quizScreen.style.animation="",400)
+}
+
+function confettiBomb(){
+for(let i=0;i<100;i++){
+let conf=document.createElement("div")
+conf.innerHTML="🎉"
+conf.style.position="absolute"
+conf.style.left=Math.random()*100+"%"
+conf.style.top="40%"
+quizScreen.appendChild(conf)
+
+conf.animate(
+[{transform:"translateY(0)",opacity:1},
+{transform:"translateY(300px)",opacity:0}],
+{duration:1500}
+)
+
+setTimeout(()=>conf.remove(),1500)
+}
+}
+
+const quizQuestions=[
+{q:"😈 Who gets jealous more easily?",
+options:[
+{text:"😌 Nonchalant Dhwani",correct:false,popup:"HELL NAWW"},
+{text:"😤 Very Much Chalant Vyom",correct:true,popup:"YES. I’ve kept a list of all the boys who have hit on you 😌📋"}
+]},
+
+{q:"😴 Who falls asleep first on calls?",
+options:[
+{text:"🍼 Sleepy Dhwanu",correct:true,popup:"Ofc you're always sleepy 😴💗"},
+{text:"👀 Insomniac Vyom",correct:false,popup:"HELL NAWW"}
+]},
+
+{q:"🔥 What distracts me mid-conversation every single time?",
+options:[
+{text:"🍑 When you turn around for no reason",correct:true,popup:"HELL YEAHHH 🍒🍑👋🏻"},
+{text:"🍒 When you lean forward ‘accidentally’",correct:true,popup:"HELL YEAHHH 🍒🍑👋🏻"}
+]},
+
+{q:"🧟 Who would survive longer in a zombie apocalypse?",
+options:[
+{text:"💪 Very very very strong Vyom",correct:true,popup:"Main character strength unlocked 💪🧟‍♂️"},
+{text:"😌 Very very very strong Dhwanu (but not as strong as Dhwanu)",correct:false,popup:"You'd sacrifice me first 😭"}
+]},
+
+{q:"🚜 When you fall asleep, your snoring sounds most like…",
+options:[
+{text:"🚜 John Deere 5050D",correct:true,popup:"Certified heavy machinery 😭"},
+{text:"🚜 Mahindra 575 DI",correct:true,popup:"Certified heavy machinery 😭"}
+]}
+]
 
 function loadQuestion(){
-    if(quizIndex>=quizQuestions.length){
-        let res = quizScoreVal >= 4 ? "Certified Main Character Energy 💖" : "We need to talk. 😭";
-        quizCard.innerHTML=`<h2>Final Score: ${quizScoreVal}/5</h2><h3>${res}</h3><button onclick="goToReasons()">Continue 😌</button>`;
-        return;
-    }
-    let q=quizQuestions[quizIndex];
-    let html=`<h2>${q.q}</h2>`;
-    q.options.forEach(opt=>{ html+=`<div class="quiz-option" onclick="selectOption(${opt.correct},'${opt.popup}')">${opt.text}</div>`; });
-    quizCard.innerHTML=html;
-    document.getElementById("quizScore").innerText="Score: "+quizScoreVal+"/5";
+
+if(quizIndex>=quizQuestions.length){
+
+let result=""
+
+if(quizScore<=2)result="We need to talk. 😭"
+else if(quizScore<=4)result="Almost Certified."
+else result="Certified Main Character Energy 💖"
+
+quizCard.innerHTML=`<h2>Final Score: ${quizScore}/5</h2><h3>${result}</h3>
+<button onclick="goToReasons()">Continue 😌</button>`
+
+if(quizScore===5){
+quizCard.style.animation="glowPulse 1s infinite alternate"
 }
 
-function selectOption(correct,popupTextStr){
-    if(correct){quizScoreVal++;}
-    quizPopup.innerText=popupTextStr;
-    quizPopup.classList.add("show");
-    setTimeout(()=>{quizPopup.classList.remove("show"); quizIndex++; loadQuestion();},1800);
+return
 }
 
-/* 4. Reasons Logic - No Repeats */
-const reasons=["Because you speak 10 thoughts at once.","Because your baby voice melts me.","Because cold coffee is your blood type.","Because you pretend to be strong but you're soft.","Because life with you is chaos in the best way.","Because your laugh fixes everything.","Because you're secretly clingy.","Because every version of you is my favourite.","Because you make normal moments special.","Because you are you."];
-let remainingReasons = [...reasons];
-let reasonCount=0;
+let q=quizQuestions[quizIndex]
 
-function goToReasons(){ transitionTo("quizScreen", "reasonsScreen"); }
+let html=`<h2>${q.q}</h2>`
+
+q.options.forEach(opt=>{
+html+=`<div class="quiz-option"
+onclick="selectOption(${opt.correct},'${opt.popup}')">${opt.text}</div>`
+})
+
+quizCard.innerHTML=html
+quizScore.innerText="Score: "+quizScore+"/5"
+}
+
+function selectOption(correct,popup){
+
+if(correct){quizScore++;confettiBomb()}
+else{shakeScreen()}
+
+quizPopup.innerText=popup
+quizPopup.classList.add("show")
+setTimeout(()=>quizPopup.classList.remove("show"),2000)
+
+setTimeout(()=>{quizIndex++;loadQuestion()},2000)
+}
+
+/* reasons */
+
+const reasons=[
+"Because you speak 10 thoughts at once.",
+"Because your baby voice melts me.",
+"Because cold coffee is your blood type.",
+"Because you pretend to be strong but you're soft.",
+"Because life with you is chaos in the best way.",
+"Because your laugh fixes everything.",
+"Because you're secretly clingy.",
+"Because every version of you is my favourite.",
+"Because you make normal moments special.",
+"Because you are you."
+]
+
+let reasonCount=0
+
+function goToReasons(){
+quizScreen.style.display="none"
+reasonsScreen.style.display="block"
+}
 
 function generateReason(){
-    if(remainingReasons.length === 0) {
-        finalReveal.style.display="block"; return;
-    }
-    reasonCount++;
-    document.getElementById("reasonCounter").innerText=reasonCount;
-    let index = Math.floor(Math.random()*remainingReasons.length);
-    document.getElementById("reasonBox").innerText = remainingReasons.splice(index, 1)[0];
-    if(reasonCount>=10) finalReveal.style.display="block";
+
+reasonCount++
+reasonCounter.innerText=reasonCount
+
+reasonBox.innerText=reasons[Math.floor(Math.random()*reasons.length)]
+
+if(reasonCount>=10){
+finalReveal.style.display="block"
 }
 
-/* 2. Final Message Message */
-function finalMessage(){
-    document.getElementById("reasonsScreen").classList.remove("active");
-    finalScreen.style.display="flex";
-    const text="This website might be version 1.0... but the story we're building together will have many more updates.";
-    let i=0;
-    function type(){
-        if(i<text.length){
-            document.getElementById("finalText").innerHTML+=text.charAt(i);
-            i++; setTimeout(type,50);
-        }else{
-            document.getElementById("finalSub").style.transition="opacity 2s";
-            document.getElementById("finalSub").style.opacity=1;
-        }
-    }
-    setTimeout(type, 800);
 }
+
+/* final */
+
+function finalMessage(){
+
+reasonsScreen.style.display="none"
+finalScreen.style.display="flex"
+
+const text="This website might be version 1.0... but the story we're building together will have many more updates."
+
+let i=0
+
+function type(){
+if(i<text.length){
+finalText.innerHTML+=text.charAt(i)
+i++
+setTimeout(type,40)
+}else{
+finalSub.style.opacity=1
+}
+}
+
+type()
+
+}
+
 </script>
+
 </body>
-</html>
+</html> 
