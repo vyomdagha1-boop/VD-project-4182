@@ -167,39 +167,7 @@ background:linear-gradient(45deg,#ff1493,#ff69b4);
 cursor:pointer;
 }
 
-#quizScore{
-position:fixed;
-top:20px;
-right:20px;
-background:black;
-padding:10px 20px;
-border-radius:20px;
-}
-
-.quiz-popup{
-position:fixed;
-top:50%;
-left:50%;
-transform:translate(-50%,-50%) scale(0);
-background:black;
-padding:25px 40px;
-border-radius:20px;
-transition:0.3s;
-}
-
-.quiz-popup.show{transform:translate(-50%,-50%) scale(1);}
-
-/* shake */
-
-@keyframes shake{
-0%{transform:translate(2px,2px);}
-25%{transform:translate(-2px,2px);}
-50%{transform:translate(2px,-2px);}
-75%{transform:translate(-2px,-2px);}
-100%{transform:translate(0,0);}
-}
-
-/* FINAL SCREEN — prettier */
+/* final */
 
 #finalScreen{
 display:none;
@@ -213,27 +181,6 @@ z-index:9999;
 align-items:center;
 justify-content:center;
 flex-direction:column;
-text-align:center;
-padding:40px;
-font-family:'Poppins',sans-serif;
-animation:finalGlow 6s ease infinite alternate;
-}
-
-@keyframes finalGlow{
-from{background:radial-gradient(circle at top,#ff6ad5,#c44dff,#3b0066);}
-to{background:radial-gradient(circle at top,#ff8ae2,#9a5cff,#200040);}
-}
-
-#finalText{
-font-size:40px;
-max-width:800px;
-text-shadow:0 0 20px rgba(255,255,255,0.4);
-}
-
-#finalSub{
-font-size:22px;
-margin-top:30px;
-transition:1s;
 }
 
 /* floating emojis */
@@ -252,12 +199,26 @@ animation:floatUp linear infinite;
 100%{transform:translateY(-120vh);opacity:0;}
 }
 
+/* floating hearts */
+
+.final-heart{
+position:fixed;
+bottom:-40px;
+font-size:26px;
+pointer-events:none;
+animation:heartRise 4s linear forwards;
+}
+
+@keyframes heartRise{
+0%{transform:translateY(0);opacity:1;}
+100%{transform:translateY(-120vh);opacity:0;}
+}
+
 </style>
 </head>
 
 <body>
 
-<!-- INTRO -->
 <div id="screen0" class="screen active">
 <h1>Hi Dhwani 💗</h1>
 <p>I built this entire website for you.</p>
@@ -266,14 +227,12 @@ animation:floatUp linear infinite;
 <button onclick="goToSystem()">Enter the Chaos</button>
 </div>
 
-<!-- HACKER -->
 <div id="screen1" class="screen hacker">
 <h1>⚠ WEBSITE CRASHED ⚠</h1>
 <p>Talking speed exceeded server capacity.</p>
 <button onclick="goToChallenge()" class="override-btn">OVERRIDE SYSTEM</button>
 </div>
 
-<!-- CHALLENGE -->
 <div id="screen2" class="screen">
 <h1>Fuel The Main Character Energy ✨</h1>
 <button onclick="showPopup('HELL NAWW')">🍵 Tea</button>
@@ -282,7 +241,6 @@ animation:floatUp linear infinite;
 <button onclick="showPopup('Pls dont try to be Vyom')">💪 Protein Shake</button>
 </div>
 
-<!-- BIRTHDAY -->
 <div id="screen3" class="screen">
 <div class="card">
 <h1>Happy Birthday Dhwanu 🎉💖</h1>
@@ -295,7 +253,6 @@ animation:floatUp linear infinite;
 </div>
 </div>
 
-<!-- GAME -->
 <div id="screen4" class="screen">
 <h1>Cold Coffee Catch ☕</h1>
 <p>Catch Coffee. Avoid Fries. First to 5 wins.</p>
@@ -303,10 +260,11 @@ animation:floatUp linear infinite;
 <div id="gameArea"></div>
 </div>
 
-<!-- COUPONS -->
 <div id="screen5" class="screen">
 <h1>You Won 😈💖</h1>
+
 <div class="coupon-container">
+
 <div class="coupon">
 <h3>Clingy Mode Activated: 5-Minute Hug Coupon</h3>
 <p>Redeem anytime. No escape allowed.</p>
@@ -326,21 +284,19 @@ animation:floatUp linear infinite;
 <h3>Loser Buys Kisses Arcade Night Pass</h3>
 <p>Winner chooses punishment.</p>
 </div>
+
 </div>
 
 <button onclick="startQuiz()">Think You Know Us? 😏</button>
+
 </div>
 
-<!-- QUIZ -->
 <div id="quizScreen">
-<div id="quizScore">Score: 0/5</div>
 <div class="quiz-card" id="quizCard"></div>
 </div>
 
-<div id="quizPopup" class="quiz-popup"></div>
 <div id="popup" class="popup"><p id="popupText"></p></div>
 
-<!-- REASONS -->
 <div id="reasonsScreen" style="display:none;padding:60px;">
 <h1>❤️ Reasons I Love You</h1>
 <h2 id="reasonCounter">0</h2>
@@ -352,12 +308,10 @@ Click the button to start 😌
 <button onclick="generateReason()">Generate Another One 💖</button>
 
 <div id="finalReveal" style="display:none;margin-top:40px;">
-<h2>And I'm still discovering new reasons every day.</h2>
 <button onclick="finalMessage()">Final Message 💌</button>
 </div>
 </div>
 
-<!-- FINAL SCREEN -->
 <div id="finalScreen">
 <h1 id="finalText"></h1>
 <h2 id="finalSub" style="opacity:0;">Happy Birthday Dhwanu 💖</h2>
@@ -365,43 +319,51 @@ Click the button to start 😌
 
 <script>
 
-/* floating emojis only on intro page */
-
-const introEmojis=["💖","✨","☕","💗","🎂","🐒"];
-
-setInterval(()=>{
-
-const intro=document.getElementById("screen0");
-
-if(!intro.classList.contains("active")) return;
-
-const emoji=document.createElement("div");
-
-emoji.className="floating-emoji";
-emoji.innerHTML=introEmojis[Math.floor(Math.random()*introEmojis.length)];
-
-emoji.style.left=Math.random()*100+"%";
-emoji.style.animationDuration=(Math.random()*3+4)+"s";
-
-document.body.appendChild(emoji);
-
-setTimeout(()=>emoji.remove(),7000);
-
-},600);
-
 /* navigation */
 
-function goToSystem(){screen0.classList.remove("active");screen1.classList.add("active")}
-function goToChallenge(){screen1.classList.remove("active");screen2.classList.add("active")}
-function goToFinal(){screen2.classList.remove("active");screen3.classList.add("active")}
+function goToSystem(){
+document.getElementById("screen0").classList.remove("active")
+document.getElementById("screen1").classList.add("active")
+}
+
+function goToChallenge(){
+document.getElementById("screen1").classList.remove("active")
+document.getElementById("screen2").classList.add("active")
+}
+
+function goToFinal(){
+document.getElementById("screen2").classList.remove("active")
+document.getElementById("screen3").classList.add("active")
+}
 
 /* popup */
 
 function showPopup(text){
-popupText.innerText=text
+let popup=document.getElementById("popup")
+document.getElementById("popupText").innerText=text
 popup.classList.add("show")
 setTimeout(()=>popup.classList.remove("show"),2000)
 }
+
+/* floating emojis first page */
+
+const emojis=["💖","✨","☕","🎂","💗"]
+
+setInterval(()=>{
+const intro=document.getElementById("screen0")
+if(!intro.classList.contains("active")) return
+
+const e=document.createElement("div")
+e.className="floating-emoji"
+e.innerHTML=emojis[Math.floor(Math.random()*emojis.length)]
+
+e.style.left=Math.random()*100+"%"
+e.style.animationDuration=(Math.random()*3+4)+"s"
+
+document.body.appendChild(e)
+setTimeout(()=>e.remove(),7000)
+
+},600)
 
 /* GAME */
 
@@ -409,39 +371,165 @@ let score=0
 let gameInterval
 
 function startGame(){
-screen3.classList.remove("active")
-screen4.classList.add("active")
+
+document.getElementById("screen3").classList.remove("active")
+document.getElementById("screen4").classList.add("active")
+
 score=0
 document.getElementById("score").innerText=score
+
 gameInterval=setInterval(spawnItem,900)
+
 }
 
 function spawnItem(){
+
+let gameArea=document.getElementById("gameArea")
+
 let item=document.createElement("div")
 item.classList.add("falling")
+
 let isCoffee=Math.random()>0.4
+
 item.innerText=isCoffee?"☕":"🍟"
+
 item.style.left=Math.random()*90+"%"
 item.style.animationDuration="3s"
 
 item.onclick=function(){
+
 if(isCoffee){score++}else{score--}
+
 document.getElementById("score").innerText=score
+
 item.remove()
-if(score>=5){endGame()}
+
+if(score>=5){
+clearInterval(gameInterval)
+document.getElementById("screen4").classList.remove("active")
+document.getElementById("screen5").classList.add("active")
+}
+
 }
 
 gameArea.appendChild(item)
+
 setTimeout(()=>item.remove(),3000)
+
 }
 
-function endGame(){
-clearInterval(gameInterval)
-screen4.classList.remove("active")
-screen5.classList.add("active")
+/* QUIZ */
+
+const quizQuestions=[
+{
+q:"Who gets jealous more easily?",
+options:[
+{text:"Nonchalant Dhwani",correct:false},
+{text:"Very Much Chalant Vyom",correct:true}
+]
+}
+]
+
+let quizIndex=0
+
+function startQuiz(){
+document.getElementById("screen5").classList.remove("active")
+document.getElementById("quizScreen").style.display="block"
+loadQuestion()
 }
 
-/* rest of your original JS unchanged */
+function loadQuestion(){
+
+let q=quizQuestions[quizIndex]
+
+let html=`<h2>${q.q}</h2>`
+
+q.options.forEach(opt=>{
+html+=`<div class="quiz-option" onclick="selectOption(${opt.correct})">${opt.text}</div>`
+})
+
+document.getElementById("quizCard").innerHTML=html
+
+}
+
+function selectOption(){
+
+document.getElementById("quizScreen").style.display="none"
+document.getElementById("reasonsScreen").style.display="block"
+
+}
+
+/* reasons */
+
+const reasons=[
+"Because you speak 10 thoughts at once.",
+"Because your baby voice melts me.",
+"Because cold coffee is your blood type.",
+"Because life with you is chaos in the best way.",
+"Because your laugh fixes everything."
+]
+
+let reasonCount=0
+
+function generateReason(){
+
+reasonCount++
+
+document.getElementById("reasonCounter").innerText=reasonCount
+
+document.getElementById("reasonBox").innerText=
+reasons[Math.floor(Math.random()*reasons.length)]
+
+if(reasonCount>=10){
+document.getElementById("finalReveal").style.display="block"
+}
+
+}
+
+/* final */
+
+function finalMessage(){
+
+document.getElementById("reasonsScreen").style.display="none"
+
+let final=document.getElementById("finalScreen")
+final.style.display="flex"
+
+const text="This website might be version 1.0... but the story we're building together will have many more updates."
+
+let i=0
+
+function type(){
+if(i<text.length){
+document.getElementById("finalText").innerHTML+=text.charAt(i)
+i++
+setTimeout(type,40)
+}else{
+document.getElementById("finalSub").style.opacity=1
+launchHearts()
+}
+}
+
+type()
+
+}
+
+function launchHearts(){
+
+setInterval(()=>{
+
+const heart=document.createElement("div")
+heart.className="final-heart"
+heart.innerHTML="💖"
+heart.style.left=Math.random()*100+"%"
+
+document.body.appendChild(heart)
+
+setTimeout(()=>heart.remove(),4000)
+
+},400)
+
+}
 
 </script>
 
