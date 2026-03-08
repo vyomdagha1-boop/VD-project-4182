@@ -244,9 +244,6 @@ animation:heartRise 4s linear forwards;
 <div id="screen3" class="screen">
 <div class="card">
 <h1>Happy Birthday Dhwanu 🎉💖</h1>
-<p>You are chaos. You are comfort.</p>
-<p>You are baby. You are boss.</p>
-<p>I would choose you in every universe.</p>
 <img src="image.jpg">
 <br>
 <button onclick="startGame()">Unlock Your Rewards 🎮</button>
@@ -262,51 +259,18 @@ animation:heartRise 4s linear forwards;
 
 <div id="screen5" class="screen">
 <h1>You Won 😈💖</h1>
-
-<div class="coupon-container">
-
-<div class="coupon">
-<h3>Clingy Mode Activated: 5-Minute Hug Coupon</h3>
-<p>Redeem anytime. No escape allowed.</p>
-</div>
-
-<div class="coupon">
-<h3>Non-Refundable Kiss Voucher</h3>
-<p>No cancellations. No returns. No mercy.</p>
-</div>
-
-<div class="coupon">
-<h3>Cold Coffee & Unnecessary Eye Contact Voucher</h3>
-<p>Strong coffee. Stronger tension.</p>
-</div>
-
-<div class="coupon">
-<h3>Loser Buys Kisses Arcade Night Pass</h3>
-<p>Winner chooses punishment.</p>
-</div>
-
-</div>
-
 <button onclick="startQuiz()">Think You Know Us? 😏</button>
-
 </div>
 
 <div id="quizScreen">
 <div class="quiz-card" id="quizCard"></div>
 </div>
 
-<div id="popup" class="popup"><p id="popupText"></p></div>
-
 <div id="reasonsScreen" style="display:none;padding:60px;">
 <h1>❤️ Reasons I Love You</h1>
 <h2 id="reasonCounter">0</h2>
-
-<div id="reasonBox" style="max-width:700px;margin:auto;padding:30px;background:rgba(255,255,255,0.15);border-radius:20px;">
-Click the button to start 😌
-</div>
-
+<div id="reasonBox">Click the button to start 😌</div>
 <button onclick="generateReason()">Generate Another One 💖</button>
-
 <div id="finalReveal" style="display:none;margin-top:40px;">
 <button onclick="finalMessage()">Final Message 💌</button>
 </div>
@@ -321,48 +285,24 @@ Click the button to start 😌
 
 /* navigation */
 
-function goToSystem(){
-document.getElementById("screen0").classList.remove("active")
-document.getElementById("screen1").classList.add("active")
-}
+function goToSystem(){screen0.classList.remove("active");screen1.classList.add("active")}
+function goToChallenge(){screen1.classList.remove("active");screen2.classList.add("active")}
+function goToFinal(){screen2.classList.remove("active");screen3.classList.add("active")}
 
-function goToChallenge(){
-document.getElementById("screen1").classList.remove("active")
-document.getElementById("screen2").classList.add("active")
-}
-
-function goToFinal(){
-document.getElementById("screen2").classList.remove("active")
-document.getElementById("screen3").classList.add("active")
-}
-
-/* popup */
-
-function showPopup(text){
-let popup=document.getElementById("popup")
-document.getElementById("popupText").innerText=text
-popup.classList.add("show")
-setTimeout(()=>popup.classList.remove("show"),2000)
-}
-
-/* floating emojis first page */
+/* floating emojis intro */
 
 const emojis=["💖","✨","☕","🎂","💗"]
 
 setInterval(()=>{
 const intro=document.getElementById("screen0")
 if(!intro.classList.contains("active")) return
-
 const e=document.createElement("div")
 e.className="floating-emoji"
 e.innerHTML=emojis[Math.floor(Math.random()*emojis.length)]
-
 e.style.left=Math.random()*100+"%"
 e.style.animationDuration=(Math.random()*3+4)+"s"
-
 document.body.appendChild(e)
 setTimeout(()=>e.remove(),7000)
-
 },600)
 
 /* GAME */
@@ -371,127 +311,154 @@ let score=0
 let gameInterval
 
 function startGame(){
-
-document.getElementById("screen3").classList.remove("active")
-document.getElementById("screen4").classList.add("active")
-
+screen3.classList.remove("active")
+screen4.classList.add("active")
 score=0
 document.getElementById("score").innerText=score
-
 gameInterval=setInterval(spawnItem,900)
-
 }
 
 function spawnItem(){
-
 let gameArea=document.getElementById("gameArea")
-
 let item=document.createElement("div")
 item.classList.add("falling")
 
 let isCoffee=Math.random()>0.4
-
 item.innerText=isCoffee?"☕":"🍟"
 
 item.style.left=Math.random()*90+"%"
 item.style.animationDuration="3s"
 
 item.onclick=function(){
-
-if(isCoffee){score++}else{score--}
-
+if(isCoffee){score++}
 document.getElementById("score").innerText=score
-
 item.remove()
 
 if(score>=5){
 clearInterval(gameInterval)
-document.getElementById("screen4").classList.remove("active")
-document.getElementById("screen5").classList.add("active")
+screen4.classList.remove("active")
+screen5.classList.add("active")
 }
-
 }
 
 gameArea.appendChild(item)
-
 setTimeout(()=>item.remove(),3000)
-
 }
 
 /* QUIZ */
 
 const quizQuestions=[
-{
-q:"Who gets jealous more easily?",
+
+{q:"😈 Who gets jealous more easily?",
 options:[
-{text:"Nonchalant Dhwani",correct:false},
-{text:"Very Much Chalant Vyom",correct:true}
-]
-}
+{text:"😌 Nonchalant Dhwani",correct:false},
+{text:"😤 Very Much Chalant Vyom",correct:true}
+]},
+
+{q:"😴 Who falls asleep first on calls?",
+options:[
+{text:"🍼 Sleepy Dhwanu",correct:true},
+{text:"👀 Insomniac Vyom",correct:false}
+]},
+
+{q:"🔥 What distracts me mid-conversation every time?",
+options:[
+{text:"🍑 When you turn around",correct:true},
+{text:"🍒 When you lean forward",correct:true}
+]},
+
+{q:"🧟 Who survives zombie apocalypse?",
+options:[
+{text:"💪 Very very strong Vyom",correct:true},
+{text:"😌 Dhwanu but not as strong",correct:false}
+]},
+
+{q:"🚜 Your snoring sounds like…",
+options:[
+{text:"🚜 John Deere 5050D",correct:true},
+{text:"🚜 Mahindra 575 DI",correct:true}
+]}
 ]
 
 let quizIndex=0
+let quizScore=0
 
 function startQuiz(){
-document.getElementById("screen5").classList.remove("active")
-document.getElementById("quizScreen").style.display="block"
+screen5.classList.remove("active")
+quizScreen.style.display="block"
+quizIndex=0
+quizScore=0
 loadQuestion()
 }
 
 function loadQuestion(){
 
-let q=quizQuestions[quizIndex]
+if(quizIndex>=quizQuestions.length){
+quizScreen.style.display="none"
+reasonsScreen.style.display="block"
+return
+}
 
+let q=quizQuestions[quizIndex]
 let html=`<h2>${q.q}</h2>`
 
 q.options.forEach(opt=>{
 html+=`<div class="quiz-option" onclick="selectOption(${opt.correct})">${opt.text}</div>`
 })
 
-document.getElementById("quizCard").innerHTML=html
-
+quizCard.innerHTML=html
 }
 
-function selectOption(){
-
-document.getElementById("quizScreen").style.display="none"
-document.getElementById("reasonsScreen").style.display="block"
-
+function selectOption(correct){
+if(correct) quizScore++
+quizIndex++
+loadQuestion()
 }
 
-/* reasons */
+/* REASONS */
 
 const reasons=[
-"Because you speak 10 thoughts at once.",
-"Because your baby voice melts me.",
-"Because cold coffee is your blood type.",
-"Because life with you is chaos in the best way.",
-"Because your laugh fixes everything."
+"I love how you understand me even when I don’t say much.",
+"I love how you always support me when things get tough.",
+"I love the way you laugh at my stupid jokes.",
+"I love how you inspire me to become a better person.",
+"I love how we can talk for hours and never get bored.",
+"I love the memories we create together.",
+"I love how your presence makes everything feel right.",
+"I love how you believe in me when I doubt myself.",
+"I love your baby voice.",
+"I love how you listen to me.",
+"I love how you remember small details about me.",
+"I love how you celebrate my wins."
 ]
 
+let usedReasons=[]
 let reasonCount=0
 
 function generateReason(){
 
+if(usedReasons.length===reasons.length) usedReasons=[]
+
+let remaining=reasons.filter(r=>!usedReasons.includes(r))
+let reason=remaining[Math.floor(Math.random()*remaining.length)]
+
+usedReasons.push(reason)
+
 reasonCount++
-
-document.getElementById("reasonCounter").innerText=reasonCount
-
-document.getElementById("reasonBox").innerText=
-reasons[Math.floor(Math.random()*reasons.length)]
+reasonCounter.innerText=reasonCount
+reasonBox.innerText=reason
 
 if(reasonCount>=10){
-document.getElementById("finalReveal").style.display="block"
+finalReveal.style.display="block"
 }
 
 }
 
-/* final */
+/* FINAL */
 
 function finalMessage(){
 
-document.getElementById("reasonsScreen").style.display="none"
-
+reasonsScreen.style.display="none"
 let final=document.getElementById("finalScreen")
 final.style.display="flex"
 
@@ -501,11 +468,11 @@ let i=0
 
 function type(){
 if(i<text.length){
-document.getElementById("finalText").innerHTML+=text.charAt(i)
+finalText.innerHTML+=text.charAt(i)
 i++
 setTimeout(type,40)
 }else{
-document.getElementById("finalSub").style.opacity=1
+finalSub.style.opacity=1
 launchHearts()
 }
 }
@@ -522,9 +489,7 @@ const heart=document.createElement("div")
 heart.className="final-heart"
 heart.innerHTML="💖"
 heart.style.left=Math.random()*100+"%"
-
 document.body.appendChild(heart)
-
 setTimeout(()=>heart.remove(),4000)
 
 },400)
