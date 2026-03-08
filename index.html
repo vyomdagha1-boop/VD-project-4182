@@ -25,15 +25,8 @@ animation:gradientBG 12s ease infinite;
 100%{background-position:0% 50%;}
 }
 
-.screen{
-display:none;
-padding:40px;
-margin-top:60px;
-}
-
-.active{
-display:block;
-}
+.screen{display:none;padding:40px;margin-top:60px;}
+.active{display:block;}
 
 button{
 padding:15px 30px;
@@ -47,9 +40,7 @@ background:linear-gradient(45deg,#ff1493,#ff69b4);
 color:white;
 }
 
-button:hover{
-transform:scale(1.1);
-}
+button:hover{transform:scale(1.1);}
 
 /* hacker */
 
@@ -76,9 +67,7 @@ color:red;
 transition:0.3s;
 }
 
-.popup.show{
-transform:translate(-50%,-50%) scale(1);
-}
+.popup.show{transform:translate(-50%,-50%) scale(1);}
 
 /* birthday */
 
@@ -120,10 +109,7 @@ from{top:-50px;}
 to{top:100%;}
 }
 
-.scoreboard{
-font-size:24px;
-margin-bottom:15px;
-}
+.scoreboard{font-size:24px;margin-bottom:15px;}
 
 /* coupons */
 
@@ -236,44 +222,37 @@ animation:heartRise 4s linear forwards;
 
 <body>
 
+<!-- INTRO -->
+
 <div id="screen0" class="screen active">
-
 <h1>Hi Dhwani 💗</h1>
-
 <p>I built this entire website for you.</p>
 <p>From scratch. With zero sleep. And full chaos.</p>
 <p>Proceed at your own risk 😌</p>
-
 <button onclick="goToSystem()">Enter the Chaos</button>
-
 </div>
+
+<!-- CRASH -->
 
 <div id="screen1" class="screen hacker">
-
 <h1>⚠ WEBSITE CRASHED ⚠</h1>
-
 <p>Talking speed exceeded server capacity.</p>
-
 <button onclick="goToChallenge()">OVERRIDE SYSTEM</button>
-
 </div>
+
+<!-- CHALLENGE -->
 
 <div id="screen2" class="screen">
-
 <h1>Fuel The Main Character Energy ✨</h1>
-
 <button onclick="showPopup('HELL NAWW')">🍵 Tea</button>
-
 <button onclick="showPopup('Too basic for my fancy girl')">💧 Water</button>
-
 <button onclick="goToFinal()">☕ Cold Coffee (Absolutely no sugar)</button>
-
 <button onclick="showPopup('Pls dont try to be Vyom')">💪 Protein Shake</button>
-
 </div>
 
-<div id="screen3" class="screen">
+<!-- BIRTHDAY -->
 
+<div id="screen3" class="screen">
 <div class="card">
 
 <h1>Happy Birthday Dhwanu 🎉💖</h1>
@@ -293,13 +272,13 @@ And somehow you are still the softest person I know.
 <button onclick="startGame()">Unlock Your Rewards 🎮</button>
 
 </div>
-
 </div>
+
+<!-- GAME -->
 
 <div id="screen4" class="screen">
 
 <h1>Cold Coffee Catch ☕</h1>
-
 <p>Catch Coffee. Avoid Fries. First to 5 wins.</p>
 
 <div class="scoreboard">Score: <span id="score">0</span></div>
@@ -308,25 +287,37 @@ And somehow you are still the softest person I know.
 
 </div>
 
+<!-- COUPONS -->
+
 <div id="screen5" class="screen">
 
 <h1>You Won 😈💖</h1>
 
 <div class="coupon-container">
 
-<div class="coupon"><h3>Clingy Mode Activated: 5-Minute Hug Coupon</h3></div>
+<div class="coupon">
+<h3>Clingy Mode Activated: 5-Minute Hug Coupon</h3>
+</div>
 
-<div class="coupon"><h3>Non-Refundable Kiss Voucher</h3></div>
+<div class="coupon">
+<h3>Non-Refundable Kiss Voucher</h3>
+</div>
 
-<div class="coupon"><h3>Cold Coffee & Unnecessary Eye Contact Voucher</h3></div>
+<div class="coupon">
+<h3>Cold Coffee & Unnecessary Eye Contact Voucher</h3>
+</div>
 
-<div class="coupon"><h3>Loser Buys Kisses Arcade Night Pass</h3></div>
+<div class="coupon">
+<h3>Loser Buys Kisses Arcade Night Pass</h3>
+</div>
 
 </div>
 
 <button onclick="startQuiz()">Think You Know Us? 😏</button>
 
 </div>
+
+<!-- QUIZ -->
 
 <div id="quizScreen">
 
@@ -335,6 +326,8 @@ And somehow you are still the softest person I know.
 <div class="quiz-card" id="quizCard"></div>
 
 </div>
+
+<!-- REASONS -->
 
 <div id="reasonsScreen" style="display:none;padding:60px;">
 
@@ -351,6 +344,8 @@ And somehow you are still the softest person I know.
 </div>
 
 </div>
+
+<!-- FINAL -->
 
 <div id="finalScreen">
 
@@ -389,19 +384,12 @@ const emojis=["💖","✨","☕","🎂","💗"]
 
 setInterval(()=>{
 if(!screen0.classList.contains("active")) return
-
 let e=document.createElement("div")
-
 e.className="floating-emoji"
-
 e.innerHTML=emojis[Math.floor(Math.random()*emojis.length)]
-
 e.style.left=Math.random()*100+"%"
-
 document.body.appendChild(e)
-
 setTimeout(()=>e.remove(),7000)
-
 },600)
 
 /* popup */
@@ -418,15 +406,17 @@ let gameInterval
 function startGame(){
 
 screen3.classList.remove("active")
-
 screen4.classList.add("active")
 
 score=0
-
-document.getElementById("score").innerText=score
+scoreDisplay()
 
 gameInterval=setInterval(spawnItem,900)
 
+}
+
+function scoreDisplay(){
+document.getElementById("score").innerText=score
 }
 
 function spawnItem(){
@@ -445,18 +435,14 @@ item.onclick=function(){
 
 if(isCoffee) score++
 
-document.getElementById("score").innerText=score
+scoreDisplay()
 
 item.remove()
 
 if(score>=5){
-
 clearInterval(gameInterval)
-
 screen4.classList.remove("active")
-
 screen5.classList.add("active")
-
 }
 
 }
@@ -471,45 +457,35 @@ setTimeout(()=>item.remove(),3000)
 
 const quizQuestions=[
 
-{
-q:"😈 Who gets jealous more easily?",
+{q:"😈 Who gets jealous more easily?",
 options:[
 {text:"😌 Nonchalant Dhwani",correct:false},
 {text:"😤 Very Much Chalant Vyom",correct:true}
-]
-},
+]},
 
-{
-q:"😴 Who falls asleep first on calls?",
+{q:"😴 Who falls asleep first on calls?",
 options:[
 {text:"🍼 Sleepy Dhwanu",correct:true},
 {text:"👀 Insomniac Vyom",correct:false}
-]
-},
+]},
 
-{
-q:"🔥 What distracts me mid-conversation every time?",
+{q:"🔥 What distracts me mid-conversation every time?",
 options:[
 {text:"🍑 When you turn around",correct:true},
 {text:"🍒 When you lean forward",correct:true}
-]
-},
+]},
 
-{
-q:"🧟 Who survives zombie apocalypse?",
+{q:"🧟 Who survives zombie apocalypse?",
 options:[
 {text:"💪 Very strong Vyom",correct:true},
 {text:"😌 Dhwanu",correct:false}
-]
-},
+]},
 
-{
-q:"🚜 Your snoring sounds like…",
+{q:"🚜 Your snoring sounds like…",
 options:[
 {text:"🚜 John Deere 5050D",correct:true},
 {text:"🚜 Mahindra 575 DI",correct:true}
-]
-}
+]}
 
 ]
 
@@ -519,7 +495,6 @@ let quizScore=0
 function startQuiz(){
 
 screen5.classList.remove("active")
-
 quizScreen.style.display="block"
 
 quizIndex=0
@@ -555,9 +530,7 @@ quizScoreDisplay()
 }
 
 function quizScoreDisplay(){
-
 quizScore.innerText="Score: "+quizScore+"/5"
-
 }
 
 function selectOption(correct){
@@ -613,9 +586,7 @@ reasonCounter.innerText=reasonCount
 reasonBox.innerText=reason
 
 if(reasonCount>=10){
-
 finalReveal.style.display="block"
-
 }
 
 }
