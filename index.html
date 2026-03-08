@@ -47,16 +47,7 @@ transform:scale(1.1);
 box-shadow:0 0 40px rgba(255,0,200,0.9);
 }
 
-#chaosBtn{
-animation:buttonGlow 2s infinite alternate;
-}
-
-@keyframes buttonGlow{
-from{box-shadow:0 0 20px #ff4dd2;}
-to{box-shadow:0 0 60px #ff00cc;}
-}
-
-/* FLOATING EMOJIS */
+/* floating intro emojis */
 
 .floating-emoji{
 position:fixed;
@@ -72,7 +63,7 @@ animation:floatUp linear infinite;
 100%{transform:translateY(-120vh);opacity:0;}
 }
 
-/* SPARKLES */
+/* sparkle */
 
 .sparkle{
 position:absolute;
@@ -88,6 +79,8 @@ animation:sparkleMove 2s linear infinite;
 100%{transform:translateY(-80px) scale(0);opacity:0;}
 }
 
+/* hacker */
+
 .hacker{
 background:black;
 color:#00ff99;
@@ -96,11 +89,7 @@ height:100vh;
 padding-top:100px;
 }
 
-.override-btn{
-background:black;
-color:#00ff99;
-border:2px solid #00ff99;
-}
+/* popup */
 
 .popup{
 position:fixed;
@@ -117,6 +106,8 @@ transition:0.3s;
 
 .popup.show{transform:translate(-50%,-50%) scale(1);}
 
+/* birthday card */
+
 .card{
 background:rgba(255,255,255,0.2);
 backdrop-filter:blur(15px);
@@ -130,6 +121,8 @@ width:260px;
 border-radius:20px;
 margin-top:20px;
 }
+
+/* GAME */
 
 #gameArea{
 position:relative;
@@ -205,10 +198,9 @@ z-index:9999;
 
 <p>I built this entire website for you.</p>
 <p>From scratch. With zero sleep. And full chaos.</p>
-<p>Proceed at your own risk 😌</p>
 
 <div style="position:relative;display:inline-block;">
-<button id="chaosBtn" onclick="goToSystem()">Enter the Chaos</button>
+<button onclick="goToSystem()">Enter the Chaos</button>
 <div id="sparkleContainer"></div>
 </div>
 
@@ -219,17 +211,19 @@ z-index:9999;
 <div id="screen1" class="screen hacker">
 <h1>⚠ WEBSITE CRASHED ⚠</h1>
 <p>Talking speed exceeded server capacity.</p>
-<button onclick="goToChallenge()" class="override-btn">OVERRIDE SYSTEM</button>
+<button onclick="goToChallenge()">OVERRIDE SYSTEM</button>
 </div>
 
 <!-- CHALLENGE -->
 
 <div id="screen2" class="screen">
 <h1>Fuel The Main Character Energy ✨</h1>
-<button onclick="showPopup('HELL NAWW')">🍵 Tea</button>
+
+<button onclick="showPopup('Aunty hai kya?')">🍵 Tea</button>
 <button onclick="showPopup('Too basic for my fancy girl')">💧 Water</button>
 <button onclick="goToFinal()">☕ Cold Coffee (Absolutely no sugar)</button>
 <button onclick="showPopup('Pls dont try to be Vyom')">💪 Protein Shake</button>
+
 </div>
 
 <!-- BIRTHDAY -->
@@ -246,33 +240,28 @@ z-index:9999;
 <!-- GAME -->
 
 <div id="screen4" class="screen">
+
 <h1>Cold Coffee Catch ☕</h1>
+<p>Catch Coffee. First to 5 wins.</p>
+
 <div class="scoreboard">Score: <span id="score">0</span></div>
+
 <div id="gameArea"></div>
+
 </div>
 
 <!-- COUPONS -->
 
 <div id="screen5" class="screen">
+
 <h1>You Won 😈💖</h1>
 
 <div class="coupon-container">
 
-<div class="coupon">
-<h3>Clingy Mode Activated: 5-Minute Hug Coupon</h3>
-</div>
-
-<div class="coupon">
-<h3>Non-Refundable Kiss Voucher</h3>
-</div>
-
-<div class="coupon">
-<h3>Cold Coffee & Unnecessary Eye Contact Voucher</h3>
-</div>
-
-<div class="coupon">
-<h3>Loser Buys Kisses Arcade Night Pass</h3>
-</div>
+<div class="coupon">5-Minute Hug Coupon</div>
+<div class="coupon">Non-Refundable Kiss Voucher</div>
+<div class="coupon">Cold Coffee Date Voucher</div>
+<div class="coupon">Arcade Night Pass</div>
 
 </div>
 
@@ -324,7 +313,7 @@ Hope you have the best day and the best year ahead
 
 <script>
 
-/* FLOATING EMOJIS ONLY ON FIRST PAGE */
+/* intro floating emojis */
 
 const introEmojis=["💖","☕","✨","🐒","🎂","💗"];
 
@@ -346,7 +335,7 @@ setTimeout(()=>emoji.remove(),7000);
 
 },600);
 
-/* SPARKLES */
+/* sparkles */
 
 setInterval(()=>{
 
@@ -364,83 +353,86 @@ setTimeout(()=>sparkle.remove(),2000);
 
 },200);
 
-/* NAVIGATION */
+/* navigation */
 
 function goToSystem(){screen0.classList.remove("active");screen1.classList.add("active")}
 function goToChallenge(){screen1.classList.remove("active");screen2.classList.add("active")}
 function goToFinal(){screen2.classList.remove("active");screen3.classList.add("active")}
 
-function showPopup(text){
-alert(text)
-}
+function showPopup(text){alert(text)}
 
 /* GAME */
 
 let score=0
+let gameRunning=false
 
 function startGame(){
 screen3.classList.remove("active")
 screen4.classList.add("active")
+score=0
+gameRunning=true
+document.getElementById("score").innerText=score
+spawnLoop()
 }
 
-function spawnCoffee(){
+function spawnLoop(){
+
+if(!gameRunning) return
+
+spawnItem()
+
+setTimeout(spawnLoop,900)
+
+}
+
+function spawnItem(){
+
+const area=document.getElementById("gameArea")
 
 let item=document.createElement("div")
+
 item.className="falling"
-item.innerText=Math.random()>0.5?"☕":"🍟"
+
+item.innerText=Math.random()>0.4?"☕":"🍟"
 
 item.style.left=Math.random()*90+"%"
 
 item.onclick=function(){
 
-if(item.innerText==="☕") score++
-
+if(item.innerText==="☕"){
+score++
 document.getElementById("score").innerText=score
+}
 
 item.remove()
 
 if(score>=5){
+gameRunning=false
 screen4.classList.remove("active")
 screen5.classList.add("active")
 }
 
 }
 
-gameArea.appendChild(item)
+area.appendChild(item)
 
 setTimeout(()=>item.remove(),3000)
 
 }
 
-setInterval(()=>{
-
-if(screen4.classList.contains("active")) spawnCoffee()
-
-},900)
-
 /* QUIZ */
 
 const questions=[
-
-{q:"Who gets jealous more easily?",
-a:["Nonchalant Dhwani","Very Much Chalant Vyom"],
-correct:1},
-
-{q:"Who falls asleep first on calls?",
-a:["Sleepy Dhwanu","Insomniac Vyom"],
-correct:0}
-
+{q:"Who gets jealous more easily?",a:["Nonchalant Dhwani","Very Much Chalant Vyom"],correct:1},
+{q:"Who falls asleep first on calls?",a:["Sleepy Dhwanu","Insomniac Vyom"],correct:0}
 ]
 
 let qi=0
 
 function startQuiz(){
-
 screen5.classList.remove("active")
 screen6.classList.add("active")
-
 loadQuestion()
-
 }
 
 function loadQuestion(){
@@ -465,7 +457,6 @@ if(qi>=questions.length){
 
 screen6.classList.remove("active")
 reasonsScreen.classList.add("active")
-
 return
 
 }
@@ -505,7 +496,7 @@ if(rc>=10) finalReveal.style.display="block"
 
 }
 
-/* FINAL MESSAGE */
+/* FINAL */
 
 function finalMessage(){
 
